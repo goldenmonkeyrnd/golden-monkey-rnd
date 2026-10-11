@@ -1,0 +1,1 @@
+{{ define "main" }}<section class="article shell"><header class="article-header"><p class="eyebrow">Golden Monkey R&D</p><h1>{{ .Title }}</h1></header><div class="prose">{{ .Content }}</div><div class="page-list">{{ range .Pages }}<article><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2><p>{{ .Description }}</p></article>{{ end }}</div></section>{{ end }}

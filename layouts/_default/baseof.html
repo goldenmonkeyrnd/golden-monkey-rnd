@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}Pauline Yeary · Data & AI Engineer{{ else }}{{ .Title }} · Pauline Yeary{{ end }}</title>
+  <meta name="description" content="{{ .Description | default .Site.Params.description }}">
+  <meta name="author" content="Pauline Yeary">
+  <meta name="theme-color" content="#F5EBDD">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta property="og:title" content="{{ .Title | default .Site.Title }}"><meta property="og:description" content="{{ .Description | default .Site.Params.description }}"><meta property="og:type" content="website"><meta property="og:url" content="{{ .Permalink }}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
+  {{ $css := resources.Get "css/site.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ $js := resources.Get "js/site.js" | minify | fingerprint }}<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" data-analytics-token="{{ .Site.Params.webAnalyticsToken }}"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header shell">
+  <a class="wordmark" href="/"><span class="brand-mark" aria-hidden="true">gm.</span><span>Golden Monkey<span class="wordmark-small">Research & Development</span></span></a>
+  <nav aria-label="Main navigation"><a href="/work/civicatlas/" {{ if strings.HasPrefix .RelPermalink "/work/" }}aria-current="page"{{ end }}>Work</a><a href="/about/" {{ if eq .RelPermalink "/about/" }}aria-current="page"{{ end }}>About</a><a href="/resume/" {{ if eq .RelPermalink "/resume/" }}aria-current="page"{{ end }}>Résumé</a><a class="nav-contact" href="mailto:goldenmonkeyrnd@gmail.com?subject=Let%E2%80%99s%20schedule%20a%2030-minute%20conversation" data-event="email_clicked">Let’s talk <span aria-hidden="true">↗</span></a></nav>
+</header>
+<main id="main">{{ block "main" . }}{{ end }}</main>
+<footer class="site-footer shell"><div><a class="footer-name" href="/">Golden Monkey R&D</a><p>Pauline Yeary · Baltimore, Maryland</p><p>Golden Monkey Research and Development LLC</p></div><div class="footer-links"><a href="mailto:goldenmonkeyrnd@gmail.com?subject=Let%E2%80%99s%20schedule%20a%2030-minute%20conversation" data-event="email_clicked">Email Pauline</a><a href="https://github.com/goldenmonkeyrnd/" data-event="github_clicked">GitHub</a><a href="/privacy/">Privacy</a></div><p class="credit">Created with AI assistance.<br>Directed and reviewed by Pauline Yeary.<br><a href="/asset-credits/">Asset credits</a></p></footer>
+</body></html>

@@ -1,0 +1,15 @@
+baseURL = "https://goldenmonkey.dev/"
+languageCode = "en-us"
+title = "Pauline Yeary · Golden Monkey R&D"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+[params]
+  description = "Pauline Yeary builds reliable data pipelines, secure Azure infrastructure, and practical guardrails for AI-assisted engineering."
+  email = "goldenmonkeyrnd@gmail.com"
+  github = "https://github.com/goldenmonkeyrnd/"
+  atlas = "https://atlas.goldenmonkey.dev/"
+  webAnalyticsToken = "ff5bdde1922f4f738f5c1b221962ff6c"
+[markup.goldmark.renderer]
+  unsafe = false
+[minify]
+  minifyOutput = true

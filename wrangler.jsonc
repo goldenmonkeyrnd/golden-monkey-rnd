@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "goldenmonkey-site",
+  "compatibility_date": "2026-10-11",
+  "account_id": "6ca2bbb1784ac84cded3bc1e4857a45b",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page",
+    "html_handling": "force-trailing-slash"
+  },
+  "routes": [
+    {
+      "pattern": "goldenmonkey.dev",
+      "custom_domain": true
+    }
+  ]
+}
