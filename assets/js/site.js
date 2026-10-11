@@ -3,7 +3,23 @@
   const privateBrowser = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
   if (privateBrowser) return;
   const token = script?.dataset.analyticsToken;
-  if (token) { const beacon = document.createElement("script"); beacon.defer = true; beacon.src = "https://static.cloudflareinsights.com/beacon.min.js"; beacon.setAttribute("data-cf-beacon", JSON.stringify({token})); document.head.append(beacon); }
+  if (token) {
+    const insertBeacon = () => {
+      if (navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1") return;
+      const beacon = document.createElement("script");
+      beacon.async = true;
+      beacon.fetchPriority = "low";
+      beacon.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      beacon.setAttribute("data-cf-beacon", JSON.stringify({token}));
+      document.head.append(beacon);
+    };
+    const scheduleBeacon = () => {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(insertBeacon, {timeout: 3000});
+      else window.setTimeout(insertBeacon, 0);
+    };
+    if (document.readyState === "complete") scheduleBeacon();
+    else window.addEventListener("load", scheduleBeacon, {once: true});
+  }
   const allowed = new Set(["conference_viewed", "github_clicked", "resume_downloaded", "walkthrough_started", "email_clicked"]);
   const sent = new Set();
   let count = 0;
