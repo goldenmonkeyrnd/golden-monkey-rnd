@@ -2,6 +2,10 @@
 
 Pauline Yeary's hiring portfolio and the website of Golden Monkey Research and Development LLC (Maryland). Hugo produces the site; Cloudflare Workers Static Assets hosts it. The conference QR points to https://goldenmonkey.dev/summit/2026/; the working data application is https://atlas.goldenmonkey.dev.
 
+## Launch status — October 11, 2026
+
+The portfolio, conference landing page, résumé PDF and recorded Sentinel walkthrough are live. Production links and the résumé QR destination have been verified. Hosted validation passes. Automatic deployment is awaiting the scoped Cloudflare CI secret; aggregate application-action storage is awaiting account-level Analytics Engine activation. Manual deployment through the connected Cloudflare API is working.
+
 ## Run and verify
 
 Use Hugo 0.160.1 extended and Bun 1.3.4.

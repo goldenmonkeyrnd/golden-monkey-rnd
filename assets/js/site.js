@@ -17,8 +17,14 @@
       if ("requestIdleCallback" in window) window.requestIdleCallback(insertBeacon, {timeout: 3000});
       else window.setTimeout(insertBeacon, 0);
     };
-    if (document.readyState === "complete") scheduleBeacon();
-    else window.addEventListener("load", scheduleBeacon, {once: true});
+    const afterPaint = () => window.requestAnimationFrame(() => window.requestAnimationFrame(scheduleBeacon));
+    const afterLoad = () => {
+      // Fonts settle layout; two frames give visible content a paint before telemetry.
+      if (document.fonts?.ready) document.fonts.ready.then(afterPaint);
+      else afterPaint();
+    };
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, {once: true});
   }
   const allowed = new Set(["conference_viewed", "github_clicked", "resume_downloaded", "walkthrough_started", "email_clicked"]);
   const sent = new Set();
