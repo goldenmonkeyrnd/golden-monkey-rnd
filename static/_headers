@@ -23,3 +23,7 @@
 /downloads/*
   ! Cache-Control
   Cache-Control: public, max-age=86400
+
+/social/*
+  ! Cache-Control
+  Cache-Control: public, max-age=86400

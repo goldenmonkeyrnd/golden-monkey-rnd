@@ -4,6 +4,8 @@ title = "Pauline Yeary · Golden Monkey R&D"
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 [params]
+  images = ["social/portfolio.png"]
+  social_image_alt = "Pauline Yeary, Data & AI Engineer. I use AI. I check its work. Golden Monkey R&D."
   description = "Pauline Yeary builds reliable data pipelines, secure Azure infrastructure, and practical guardrails for AI-assisted engineering."
   email = "goldenmonkeyrnd@gmail.com"
   github = "https://github.com/goldenmonkeyrnd/"
