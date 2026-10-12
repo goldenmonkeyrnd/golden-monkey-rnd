@@ -1,5 +1,5 @@
 ---
-images: ["social/civicatlas.png"]
+images: ["social/civicatlas-monkey.png"]
 social_image_alt: "CivicAtlas: Maryland, at work. A map of all 24 Maryland jurisdictions. 2024 private-sector employment snapshot."
 title: "CivicAtlas"
 eyebrow: "Public data · Working application"

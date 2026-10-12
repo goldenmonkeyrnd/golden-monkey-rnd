@@ -31,6 +31,6 @@ For rollback, list deployments with `bunx wrangler deployments list`, then use `
 
 ## Assets and privacy
 
-New code is MIT licensed. Written content and the original AI-generated monkey portrait are copyright Pauline Yeary. Fonts retain their SIL Open Font Licenses under static/fonts; see /asset-credits/. Hugo derives responsive WebP images from the original portrait. Its native OpenGraph and Twitter Card partials use global social images, with a CivicAtlas page override. Hugo publishes those PNG resources and reads their actual dimensions; the favicon family and browser manifest need no runtime framework or service worker.
+New code is MIT licensed. Written content and the original AI-generated golden-monkey laboratory illustration are copyright Pauline Yeary. Fonts retain their SIL Open Font Licenses under static/fonts; see /asset-credits/. Hugo derives responsive WebP images from the original laboratory illustration. Its native OpenGraph and Twitter Card partials use global social images, with a CivicAtlas page override. Hugo publishes those PNG resources and reads their actual dimensions; the favicon family and browser manifest need no runtime framework or service worker.
 
 Page analytics and bounded aggregate events honor GPC/DNT. The site stores no contact submissions, persistent visitor identifiers or fingerprints. See /privacy/ and the CivicAtlas telemetry implementation. AI assistance is disclosed; the public claims and engineering decisions are human-directed.

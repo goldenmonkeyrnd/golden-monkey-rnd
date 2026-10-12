@@ -8,7 +8,7 @@ lead: "Curious about systems. Serious about the work. Delighted by a very partic
 
 Golden snub-nosed monkeys are my favorite animals. I love their expressive faces, their ridiculous charm and the way communal care makes the troop bigger than any one individual. That is a good reminder of what I enjoy about engineering: people sharing expertise and helping each other do better work.
 
-The mascot is an original AI-generated portrait. The enormous bow tie and floating fruit are intentional. I want this website to show that a human with a sense of humor is directing the work.
+The laboratory scene is an original AI-generated illustration. Golden-monkey scientists, elaborate holographic assistants and wonderfully excessive research equipment are intentional. I want this website to show that a human with a sense of humor is directing the work.
 
 ## Clear outcomes, honest feedback
 
