@@ -31,7 +31,7 @@
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header shell">
-  <a class="wordmark" href="/"><img class="brand-mark" src="/favicon.svg?v=monkey-20261012" width="48" height="48" alt="" aria-hidden="true"><span>Golden Monkey<span class="wordmark-small">Research & Development</span></span></a>
+  <a class="wordmark" href="/"><img class="brand-mark" src="/android-chrome-192x192.png?v=monkey-20261012" width="48" height="48" alt="" aria-hidden="true"><span>Golden Monkey<span class="wordmark-small">Research & Development</span></span></a>
   <nav aria-label="Main navigation"><a href="/work/civicatlas/" {{ if strings.HasPrefix .RelPermalink "/work/" }}aria-current="page"{{ end }}>Work</a><a href="/about/" {{ if eq .RelPermalink "/about/" }}aria-current="page"{{ end }}>About</a><a href="/resume/" {{ if eq .RelPermalink "/resume/" }}aria-current="page"{{ end }}>Résumé</a><a class="nav-contact" href="mailto:goldenmonkeyrnd@gmail.com?subject=Let%E2%80%99s%20schedule%20a%2030-minute%20conversation" data-event="email_clicked">Let’s talk <span aria-hidden="true">↗</span></a></nav>
 </header>
 <main id="main">{{ block "main" . }}{{ end }}</main>
