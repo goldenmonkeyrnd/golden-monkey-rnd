@@ -17,7 +17,15 @@ bun run build
 bun run check
 ```
 
-`check` validates launch artifacts, every local HTML link, and the approved public identity. The downloadable two-page PDF is public; its editable source is retained privately. The case studies distinguish delivered experience, recorded demonstrations and bounded verification.
+`dev` and `build` first import the checksum-pinned Sentinels release in `data/sentinels-release.json`. The importer caches verified bytes under ignored `artifacts/sentinels/`, rejects links, archive traversal, duplicate entries and assets exceeding Cloudflare's 25 MiB per-file limit, then stages the lab under ignored `static/labs/sentinels/v0.1.0/`. A clean first build needs network access to GitHub; cached builds need no release download. For qualification, set `SENTINELS_ARCHIVE_PATH` to a local copy of the identical pinned archive; its digest is still mandatory.
+
+`check` validates launch artifacts, every local HTML link, the approved public identity, the lab inventory and the route-specific runtime policy. The downloadable two-page PDF is public; its editable source is retained privately. The case studies distinguish delivered experience, recorded demonstrations and bounded verification.
+
+## Sentinels lab
+
+The analyzer, browser code, examples and runtime bundle belong to [goldenmonkeyrnd/sentinels](https://github.com/goldenmonkeyrnd/sentinels), licensed AGPL-3.0-only. This site consumes the pinned [v0.1.0 release](https://github.com/goldenmonkeyrnd/sentinels/releases/tag/v0.1.0), with corresponding source and dependency notices included. Do not edit the imported files here; qualify a new upstream release and update the URL and SHA-256 manifest together.
+
+The agentic-engineering page creates its same-origin iframe only after **Try the lab**. The lab's Python runtime loads only after activation. Its functional loader is independent of page analytics and GPC/DNT. The WebAssembly and worker policy applies only to `/labs/sentinels/v0.1.0/*`; the parent permits same-origin frames. The lab has no content telemetry or automatic persistence. Original recordings, captions and transcript remain historical evidence, with their capture provenance linked from the article.
 
 ## Deploy
 
@@ -31,6 +39,6 @@ For rollback, list deployments with `bunx wrangler deployments list`, then use `
 
 ## Assets and privacy
 
-New code is MIT licensed. Written content and the original AI-generated golden-monkey laboratory illustration are copyright Pauline Yeary. Fonts retain their SIL Open Font Licenses under static/fonts; see /asset-credits/. Hugo derives responsive WebP images from the original laboratory illustration. Its native OpenGraph and Twitter Card partials use global social images, with a CivicAtlas page override. Hugo publishes those PNG resources and reads their actual dimensions; the favicon family and browser manifest need no runtime framework or service worker.
+Portfolio code is MIT licensed; the imported Sentinels lab is AGPL-3.0-only with its own source and notices. Written content and the original AI-generated golden-monkey laboratory illustration are copyright Pauline Yeary. Fonts retain their SIL Open Font Licenses under static/fonts; see /asset-credits/. Hugo derives responsive WebP images from the original laboratory illustration. Its native OpenGraph and Twitter Card partials use global social images, with a CivicAtlas page override. Hugo publishes those PNG resources and reads their actual dimensions; the favicon family and browser manifest need no runtime framework or service worker.
 
 Page analytics and bounded aggregate events honor GPC/DNT. The site stores no contact submissions, persistent visitor identifiers or fingerprints. See /privacy/ and the CivicAtlas telemetry implementation. AI assistance is disclosed; the public claims and engineering decisions are human-directed.

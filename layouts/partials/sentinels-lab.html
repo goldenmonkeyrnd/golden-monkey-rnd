@@ -1,0 +1,11 @@
+{{ $release := index hugo.Data "sentinels-release" }}
+{{ $path := printf "/labs/sentinels/%s/" $release.version }}
+<section class="sentinels-lab" aria-labelledby="sentinels-lab-title" data-sentinels-lab>
+  <h2 id="sentinels-lab-title">Break a connection. Inspect the result. Repair it.</h2>
+  <p id="sentinels-lab-scope">Edit synthetic Python files and contracts, then run the released analyzer on your device. Reports show structural evidence and uncertainty. Edited source is parsed as data and never executed.</p>
+  <button class="button" type="button" data-sentinels-activate data-lab-url="{{ $path }}">Try the lab</button>
+  <div class="sentinels-frame" data-sentinels-frame hidden></div>
+  <p class="sentinels-links"><a href="{{ $path }}">Open the lab directly</a> · <a href="https://github.com/goldenmonkeyrnd/sentinels/tree/{{ $release.version }}">Inspect the exact source</a> · <a href="https://github.com/goldenmonkeyrnd/sentinels/releases/tag/{{ $release.version }}">Release and downloads</a></p>
+  <p>The Python runtime loads after activation. Edits and reports stay in this browser, without automatic saving or lab telemetry. Analysis works offline after initialization.</p>
+  <noscript><p>JavaScript is required for the browser lab. Download the release and run its CLI locally to inspect the same contracts.</p></noscript>
+</section>

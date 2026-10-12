@@ -12,7 +12,13 @@ Each application event contains an allowlisted action, a page surface and the fi
 
 ## Browser privacy preferences
 
-When your browser sends Global Privacy Control or Do Not Track, the site does not load its Web Analytics beacon or send application engagement events. Essential page and data requests still work. Blocking analytics does not block the portfolio or CivicAtlas.
+When your browser sends Global Privacy Control or Do Not Track, the site does not load its Web Analytics beacon or send application engagement events. Essential page and data requests still work. Blocking analytics does not block the portfolio, CivicAtlas or the Sentinels lab.
+
+## Sentinels browser lab
+
+The lab loads its Python runtime only after activation. It parses the files you edit as data on your device; it does not execute your application or upload source, contracts or reports. Edits remain in browser memory until you leave or reload, with no automatic persistence. Downloads are initiated by you. The lab introduces no telemetry or analytics script, and browser privacy preferences do not disable analysis.
+
+Runtime files are served from this website. Cloudflare processes ordinary delivery requests, including connection metadata, while those assets load. After initialization, analysis needs no network connection. This does not promise that a fresh page can reload offline.
 
 ## What these numbers mean
 
@@ -24,4 +30,4 @@ There is no contact form on this site. Choosing **Email Pauline** opens your ema
 
 Questions about this policy can be sent to [goldenmonkeyrnd@gmail.com](mailto:goldenmonkeyrnd@gmail.com?subject=Portfolio%20privacy%20question).
 
-Updated October 11, 2026.
+Updated October 12, 2026.

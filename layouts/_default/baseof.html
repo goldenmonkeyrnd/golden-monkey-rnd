@@ -27,6 +27,7 @@
   <link rel="preload" href="/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
   {{ $css := resources.Get "css/site.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ $js := resources.Get "js/site.js" | minify | fingerprint }}<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" data-analytics-token="{{ .Site.Params.webAnalyticsToken }}"></script>
+  {{ if .Params.sentinels_lab }}{{ $labjs := resources.Get "js/sentinels-lab.js" | minify | fingerprint }}<script defer src="{{ $labjs.RelPermalink }}" integrity="{{ $labjs.Data.Integrity }}"></script>{{ end }}
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>

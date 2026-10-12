@@ -42,15 +42,15 @@ A working Maryland employment explorer: Python and DuckDB produce a validated 20
 
 [Open CivicAtlas](https://atlas.goldenmonkey.dev/) · [Inspect the implementation](https://github.com/goldenmonkeyrnd/civicatlas)
 
-### Sentinel checks — CivicAtlas Python pipeline
+### Sentinels — reusable integration checks
 
 **2026**
 
-Directed an agent-assisted AST checker that resolves supported local imported function references and tests static reachability from the production entry point to required validation. Demonstrates deliberate failures, repaired code and unresolved dynamic constructs.
+Directed an agent-assisted, source-only Python analyzer for required connections, producer-to-consumer handoffs and declared shapes. The separate AGPL repository includes strict Pydantic contracts, supported class/framework analysis, a CLI and an editable browser lab using the same analyzer wheel. CivicAtlas uses its released CLI for real pipeline contracts.
 
 This is bounded static evidence, supported by explicit fixtures and separate data tests. It does not claim runtime correctness or validation on every execution path.
 
-[Watch the demonstration](/work/agentic-engineering/)
+[Try the editable lab](/work/agentic-engineering/) · [Inspect Sentinels](https://github.com/goldenmonkeyrnd/sentinels)
 
 ## Technical skills
 
