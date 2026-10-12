@@ -6,7 +6,7 @@ lead: "I want to know which work people find useful. You can explore it without 
 ---
 ## What is measured
 
-Cloudflare Web Analytics measures aggregate page traffic and performance. Aggregate application-action storage is currently disabled while account setup is completed. The prepared event system covers conference-page views, county comparisons, source-inspector opens, GitHub clicks, résumé downloads, walkthrough starts and email-link clicks; events sent to its endpoint are currently discarded.
+Cloudflare Web Analytics measures aggregate page traffic and performance. Cloudflare Workers Analytics Engine stores aggregate application actions: conference-page views, county comparisons, source-inspector opens, GitHub clicks, résumé downloads, walkthrough starts and email-link clicks.
 
 Each application event contains an allowlisted action, a page surface and the fixed conference campaign label. The event payload does not include your name, email, IP address, full referrer, URL query parameters or a persistent visitor identifier. The application does not set analytics cookies or fingerprint your device. Cloudflare may process network request information to provide and protect its services.
 
