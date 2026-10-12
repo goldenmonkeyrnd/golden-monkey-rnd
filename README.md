@@ -2,9 +2,9 @@
 
 Pauline Yeary's hiring portfolio and the website of Golden Monkey Research and Development LLC (Maryland). Hugo produces the site; Cloudflare Workers Static Assets hosts it. The conference QR points to https://goldenmonkey.dev/summit/2026/; the working data application is https://atlas.goldenmonkey.dev.
 
-## Launch status — October 11, 2026
+## Launch status — October 12, 2026
 
-The portfolio, conference landing page, résumé PDF and recorded Sentinel walkthrough are live. Production links and the digital résumé QR destination have been verified. GitHub Actions validation and automatic deployment have both passed against production. Privacy-conscious application events are stored in Analytics Engine; conference-page, comparison and source-inspector actions have been verified with a sampling-aware query. Verification traffic is not recruiter engagement.
+The portfolio, conference landing page, résumé and editable Sentinels lab are live. The lab runs the released analyzer on visitor-edited source; the original CivicAtlas recording remains historical evidence with its provenance. Production links and the digital résumé QR destination have been verified. GitHub Actions validation and automatic deployment have both passed against production. Privacy-conscious application events are stored in Analytics Engine; conference-page, comparison and source-inspector actions have been verified with a sampling-aware query. Verification traffic is not recruiter engagement.
 
 ## Run and verify
 
