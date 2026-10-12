@@ -18,11 +18,8 @@
       else window.setTimeout(insertBeacon, 0);
     };
     const afterPaint = () => window.requestAnimationFrame(() => window.requestAnimationFrame(scheduleBeacon));
-    const afterLoad = () => {
-      // Fonts settle layout; two frames give visible content a paint before telemetry.
-      if (document.fonts?.ready) document.fonts.ready.then(afterPaint);
-      else afterPaint();
-    };
+    // Two animation frames allow visible content to paint without forcing font layout.
+    const afterLoad = afterPaint;
     if (document.readyState === "complete") afterLoad();
     else window.addEventListener("load", afterLoad, {once: true});
   }
