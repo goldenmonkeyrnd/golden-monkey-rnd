@@ -85,6 +85,7 @@ export function readState(root = "."): { pin: Pin; catalog: Catalog; policy: Pol
       validateQualification(JSON.parse(bytes.toString("utf8")), value as unknown as Release);
     }
   }
+  if (!catalog.releases.some((r: Release) => r.legacy === true && r.tag === "v0.1.0")) throw new Error("Retained catalog must preserve the original v0.1.0 assets");
   if (!hashes.has(pin.archive_sha256)) throw new Error("Current release is absent from retained catalog");
   const policy = parse("sentinels-policy.json"); keys(policy, ["schema_version", "blocked"], "promotion policy");
   if (policy.schema_version !== 1 || !Array.isArray(policy.blocked)) throw new Error("Invalid promotion policy");

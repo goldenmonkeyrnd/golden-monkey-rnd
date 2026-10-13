@@ -87,6 +87,9 @@ try {
   assert.equal(await preparePromotion(f.input,f.remote,root),true);
   assert.equal(readState(root).catalog.releases.length,2);
   assert.equal(await preparePromotion(f.input,f.remote,root),false,"verified duplicate dispatch is idempotent");
+  const catalogFile=join(root,"data/sentinels-catalog.json"),retainedBytes=readFileSync(catalogFile),withoutLegacy=JSON.parse(retainedBytes.toString());
+  withoutLegacy.releases=withoutLegacy.releases.filter((r:{legacy?:boolean})=>!r.legacy);writeFileSync(catalogFile,JSON.stringify(withoutLegacy));
+  assert.throws(()=>readState(root),/preserve the original v0.1.0 assets/);writeFileSync(catalogFile,retainedBytes);
   if(existsSync(cachedLegacy)){
     mkdirSync(join(root,"artifacts/sentinels"),{recursive:true});writeFileSync(join(root,"artifacts/sentinels",`${legacy.archive.sha256}.tar.gz`),readFileSync(cachedLegacy));
     process.chdir(root);await importReleases();process.chdir(originalRoot);
