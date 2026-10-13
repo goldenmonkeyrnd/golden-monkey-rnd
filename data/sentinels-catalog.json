@@ -11,6 +11,20 @@
         "bytes": 8267400
       },
       "legacy": true
+    },
+    {
+      "tag": "v0.1.1",
+      "release_id": 411113245,
+      "source_sha": "30dd5f12bc96bfd88fb64312be6bd6654ec35e26",
+      "archive": {
+        "url": "https://github.com/goldenmonkeyrnd/sentinels/releases/download/v0.1.1/sentinels-lab-v0.1.1.tar.gz",
+        "sha256": "96f9a40c426257b0bb6f34984a5c29f4840f1cb37ab2f36985b1dc4702c1f069",
+        "bytes": 8270230
+      },
+      "qualification": {
+        "file": "data/sentinels-provenance/v0.1.1.json",
+        "sha256": "919be51114a997b36e4f102fc0d2d7b20b8c3105e23da7d97d2f675aced98de4"
+      }
     }
   ]
 }
