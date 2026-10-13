@@ -57,8 +57,14 @@ export async function preparePromotion(input: Promotion, remote: Remote = github
   const archiveName = `sentinels-lab-${input.tag}.tar.gz`;
   const release: Release = { tag: input.tag, release_id: input.release_id, source_sha: input.source_sha, archive: { url: releaseURL(input.tag, archiveName), sha256: raw.assets?.[archiveName]?.sha256, bytes: raw.assets?.[archiveName]?.bytes }, qualification: { file: `data/sentinels-provenance/${input.tag}.json`, sha256: input.qualification_sha256 } };
   const record = validateQualification(raw, release);
-  const commit = await remote.json<{ sha: string }>(`commits/${input.tag}`);
-  if (commit.sha !== input.source_sha) throw new Error("Published source tag differs from qualified commit");
+  const tag = await remote.json<{ ref: string; object: { type: string; sha: string } }>(`git/ref/tags/${input.tag}`);
+  if (tag.ref !== `refs/tags/${input.tag}`) throw new Error("Published source tag differs from qualified commit");
+  let target = tag.object;
+  for (let depth = 0; target.type === "tag" && depth < 5; depth++) {
+    const annotated = await remote.json<{ object: { type: string; sha: string } }>(`git/tags/${target.sha}`);
+    target = annotated.object;
+  }
+  if (target.type !== "commit" || target.sha !== input.source_sha) throw new Error("Published source tag differs from qualified commit");
   const run = await remote.json<Run>(`actions/runs/${record.qualification.run_id}`);
   if (run.id !== record.qualification.run_id || run.head_sha !== input.source_sha || run.path !== record.qualification.workflow_path || run.event !== "push" || run.head_branch !== input.tag) throw new Error("Qualification run differs from the exact source tag/workflow");
   const jobList = await remote.json<{ jobs: Job[]; total_count: number }>(`actions/runs/${run.id}/jobs?per_page=100`);

@@ -48,7 +48,7 @@ function fixture(options: { nativeFailure?: boolean; browserMismatch?: boolean; 
     let value: unknown;
     if(path===`releases/${published.id}`)value=published;
     else if(path.startsWith("releases?"))value=[published];
-    else if(path===`commits/${tag}`)value={sha:source};
+    else if(path===`git/ref/tags/${tag}`)value={ref:`refs/tags/${tag}`,object:{type:"commit",sha:source}};
     else if(path===`actions/runs/${run.id}`)value=run;
     else if(path===`actions/runs/${run.id}/jobs?per_page=100`)value={total_count:jobs.length,jobs:jobs.map(j=>({...j,status:"completed"}))};
     else throw new Error(`Unexpected provenance request ${path}`);
@@ -66,7 +66,7 @@ function freshRoot(): string {
 const tests: {name:string;reason:RegExp;options?:Parameters<typeof fixture>[0];alter?:(f:ReturnType<typeof fixture>)=>void}[] = [
   {name:"dispatch checksum mismatch",reason:/qualification checksum mismatch/,alter:f=>{f.input.qualification_sha256="0".repeat(64)}},
   {name:"prerelease",reason:/published stable release/,alter:f=>{f.published.prerelease=true}},
-  {name:"wrong source tag",reason:/source tag differs/,alter:f=>{const original=f.remote.json;f.remote.json=async<T>(p:string)=>p.startsWith("commits/")?{sha:"2".repeat(40)}as T:original<T>(p)}},
+  {name:"wrong source tag",reason:/source tag differs/,alter:f=>{const original=f.remote.json;f.remote.json=async<T>(p:string)=>p.startsWith("git/ref/")?{ref:`refs/tags/${f.input.tag}`,object:{type:"commit",sha:"2".repeat(40)}}as T:original<T>(p)}},
   {name:"wrong qualification workflow",reason:/exact source tag\/workflow/,alter:f=>{f.run.path=".github/workflows/untrusted.yml"}},
   {name:"failed browser job",reason:/Qualification job has not passed/,alter:f=>{f.jobs[3].conclusion="failure"}},
   {name:"changed released bytes",reason:/asset checksum mismatch/,alter:f=>{f.assets.set("NOTICE",Buffer.from("different"))}},
