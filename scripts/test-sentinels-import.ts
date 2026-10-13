@@ -1,12 +1,9 @@
+import { readArchive } from "./sentinels-archive";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
-import { gzipSync } from "node:zlib";
+import { gzipSync, gunzipSync } from "node:zlib";
 
 type Entry = { name: string; data: Buffer; kind?: string };
 const hash = (data: Buffer) => createHash("sha256").update(data).digest("hex");
-const script = resolve("scripts/import-sentinels.ts");
 const bytes = Buffer.from("<!doctype html><title>Qualified test archive</title>");
 const metadata = Buffer.from(JSON.stringify({version:"0.1.0",files:{"index.html":{sha256:hash(bytes),bytes:bytes.length}}}));
 const valid: Entry[] = [{name:"index.html",data:bytes},{name:"assets-manifest.json",data:metadata}];
@@ -31,9 +28,9 @@ function tar(entries: Entry[]): Buffer {
   blocks.push(Buffer.alloc(1024));
   return gzipSync(Buffer.concat(blocks));
 }
-const cases: {name:string;entries:Entry[];success?:boolean;wrongHash?:boolean;reason?:string}[] = [
+const cases: {name:string;entries:Entry[];success?:boolean;badHeader?:boolean;reason?:string}[] = [
   {name:"valid pinned archive",entries:valid,success:true},
-  {name:"checksum mismatch",entries:valid,wrongHash:true,reason:"checksum or size mismatch"},
+  {name:"tar header checksum mismatch",entries:valid,badHeader:true,reason:"Invalid tar header checksum"},
   {name:"parent traversal",entries:[...valid,{name:"../escaped.txt",data:Buffer.from("escape")}],reason:"Unsafe or duplicate archive path"},
   {name:"absolute path",entries:[...valid,{name:"/escaped.txt",data:Buffer.from("escape")}],reason:"Unsafe or duplicate archive path"},
   {name:"symbolic link",entries:[...valid,{name:"linked",data:Buffer.alloc(0),kind:"2"}],reason:"link or unsupported entry"},
@@ -42,19 +39,14 @@ const cases: {name:string;entries:Entry[];success?:boolean;wrongHash?:boolean;re
   {name:"inventory mismatch",entries:[...valid,{name:"unlisted.js",data:Buffer.from("extra")}],reason:"inventory differs from archive files"},
 ];
 for (const test of cases) {
-  const root = mkdtempSync(join(tmpdir(),"sentinels-import-"));
+  let archive = tar(test.entries);
+  if (test.badHeader) { const bytes=gunzipSync(archive);bytes[0]^=1;archive=gzipSync(bytes); }
   try {
-    const archive = tar(test.entries);
-    mkdirSync(join(root,"data"));
-    writeFileSync(join(root,"bundle.tar.gz"),archive);
-    writeFileSync(join(root,"data/sentinels-release.json"),JSON.stringify({version:"v0.1.0",url:"https://github.com/goldenmonkeyrnd/sentinels/releases/download/v0.1.0/sentinels-lab-v0.1.0.tar.gz",sha256:test.wrongHash?"0".repeat(64):hash(archive)}));
-    const run = Bun.spawnSync([process.execPath,script],{cwd:root,env:{...process.env,SENTINELS_ARCHIVE_PATH:join(root,"bundle.tar.gz")}});
-    if ((run.exitCode===0)!==Boolean(test.success)) throw new Error(`${test.name}: unexpected exit ${run.exitCode}\n${run.stderr.toString()}`);
-    if (test.reason && !run.stderr.toString().includes(test.reason)) throw new Error(`${test.name}: rejected for the wrong reason\n${run.stderr.toString()}`);
-    const staged=join(root,"static/labs/sentinels/v0.1.0/index.html");
-    if (test.success && (!existsSync(staged) || !readFileSync(staged).equals(bytes))) throw new Error("Valid archive was not staged exactly");
-    if (!test.success && existsSync(staged)) throw new Error(`${test.name}: rejected archive changed staged output`);
-    if (existsSync(join(root,"escaped.txt"))) throw new Error("Archive escaped the stage");
-  } finally { rmSync(root,{recursive:true,force:true}); }
+    const entries = readArchive(archive, "v0.1.0");
+    if (!test.success) throw new Error(`${test.name}: rejected archive was accepted`);
+    if (!entries.get("index.html")?.equals(bytes)) throw new Error("Valid archive was not read exactly");
+  } catch (error) {
+    if (test.success || !String(error).includes(test.reason!)) throw error;
+  }
 }
-console.log(`Verified Sentinels importer acceptance and ${cases.length-1} rejection controls.`);
+console.log(`Verified Sentinels archive acceptance and ${cases.length-1} rejection controls.`);

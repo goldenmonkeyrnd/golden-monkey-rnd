@@ -16,7 +16,7 @@ When your browser sends Global Privacy Control or Do Not Track, the site does no
 
 ## Sentinels browser lab
 
-The lab loads its Python runtime only after activation. It parses the files you edit as data on your device; it does not execute your application or upload source, contracts or reports. Edits remain in browser memory until you leave or reload, with no automatic persistence. Downloads are initiated by you. The lab introduces no telemetry or analytics script, and browser privacy preferences do not disable analysis.
+The lab loads its Python runtime only after activation. It parses the files you edit as data on your device; it does not execute your application or upload source, contracts or reports. Edits remain in browser memory until you leave or reload, with no automatic persistence. Downloads are initiated by you. The direct lab page and its workspace load no analytics script. The article retains the portfolio’s existing preference-aware analytics. The lab introduces no telemetry, and browser privacy preferences do not disable analysis.
 
 Runtime files are served from this website. Cloudflare processes ordinary delivery requests, including connection metadata, while those assets load. After initialization, analysis needs no network connection. This does not promise that a fresh page can reload offline.
 

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "releases": [
+    {
+      "tag": "v0.1.0",
+      "release_id": 411052089,
+      "source_sha": "f1a48dac3e4a3acb9356db8caa71a069a2999db9",
+      "archive": {
+        "url": "https://github.com/goldenmonkeyrnd/sentinels/releases/download/v0.1.0/sentinels-lab-v0.1.0.tar.gz",
+        "sha256": "8ca85db312e04f95c23bdad066746e9337294170bfefb06d78b19750b06aed88",
+        "bytes": 8267400
+      },
+      "legacy": true
+    }
+  ]
+}

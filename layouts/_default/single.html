@@ -2,7 +2,7 @@
 <article class="article shell">
   <header class="article-header"><p class="eyebrow">{{ .Params.eyebrow | default "Golden Monkey R&D" }}</p><h1>{{ .Title }}</h1>{{ with .Params.lead }}<p class="article-lead">{{ . }}</p>{{ end }}</header>
   <div class="prose">{{ .Content }}</div>
-  {{ if .Params.sentinels_lab }}{{ partial "sentinels-lab.html" . }}{{ end }}
+  {{ if .Params.sentinels_lab }}{{ partial "sentinels-lab.html" (dict "page" . "direct" false) }}{{ end }}
   {{ if .Params.walkthrough }}
   <section class="walkthrough" aria-labelledby="walkthrough-title">
     <h2 id="walkthrough-title">Historical recording: the first CivicAtlas checker</h2>

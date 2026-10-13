@@ -50,7 +50,7 @@ Directed an agent-assisted, source-only Python analyzer for required connections
 
 This is bounded static evidence, supported by explicit fixtures and separate data tests. It does not claim runtime correctness or validation on every execution path.
 
-[Try the editable lab](/work/agentic-engineering/) · [Inspect Sentinels](https://github.com/goldenmonkeyrnd/sentinels)
+[Try the editable lab](/labs/sentinels/) · [Inspect Sentinels](https://github.com/goldenmonkeyrnd/sentinels)
 
 ## Technical skills
 

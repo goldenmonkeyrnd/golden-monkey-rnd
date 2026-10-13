@@ -32,6 +32,6 @@ Supported contracts return **PASS** or **FAIL**. Relevant ambiguity returns **UN
 
 I did not systematically measure false positives in the original project. The current demonstration uses explicit fixtures to make its supported behavior and limitations visible.
 
-Sentinels is [AGPL-3.0-only](https://github.com/goldenmonkeyrnd/sentinels/blob/v0.1.0/LICENSE). The [v0.1.0 release](https://github.com/goldenmonkeyrnd/sentinels/releases/tag/v0.1.0) includes source, the CLI wheel, the self-hosted browser lab, notices and checksums. Its scope is documented in the repository so the claim can stay as precise as the check.
+Sentinels is AGPL-3.0-only. The [direct lab](/labs/sentinels/) shows the latest verified stable release adopted by this site. Its exact source, release, license, CLI wheel and downloads are linked beside the workspace. Released assets remain pinned together, so an open analysis session keeps the version it started with. Its scope is documented in the repository so the claim can stay as precise as the check.
 
 The original recording remains below as historical evidence of the earlier CivicAtlas checker. The interactive lab produces a fresh result from your edits.
