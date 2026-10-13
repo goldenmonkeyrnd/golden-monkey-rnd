@@ -14,13 +14,21 @@ I identified the problem. An agent proposed abstract syntax tree analysis. I dir
 
 ## Make the evidence inspectable
 
-[Sentinels](https://github.com/goldenmonkeyrnd/sentinels) makes those checks a separate, reusable tool. Its three contract families ask concrete questions:
+[Sentinels](https://github.com/goldenmonkeyrnd/sentinels) makes those checks a separate, reusable tool. Its integration contracts ask concrete questions:
 
 1. Does a declared production entry connect to the required function or method?
 2. Does a producer’s result reach the named consumer argument or payload field?
 3. Do produced fields, exports or a JSON artifact agree with the declared shape?
 
+{{< sentinels-coverage >}}
+A fourth family checks coverage policy: does every declaration in a named source directory have a compatible contract, or an explicit reason for treating it as internal? Its inventory exposes unclassified additions and stale ledger entries. An internal classification records a decision; it does not prove the code behaves correctly.
+{{< /sentinels-coverage >}}
+
 The editable lab below uses a synthetic county-publication workflow. Disconnect its validator, discard its calculation or rename a published field. Run the analyzer, follow its witness to the source, then repair the defect. The examples include class methods, Prefect scheduling and Typer registration. You can change the contract too, and download the complete input bundle and report to reproduce the result locally.
+
+{{< sentinels-coverage >}}
+The coverage story adds a public function without classifying it. The existing validator contract still passes, while the coverage check fails. Add an appropriate requirement or document its internal role, then inspect the updated inventory.
+{{< /sentinels-coverage >}}
 
 The browser and CLI use the same Python wheel. Reports name inspected files, hashes, supported assumptions, source locations and unresolved reasons. CivicAtlas adopts the released CLI for its actual validator connection, manifest handoff and published snapshot shape; its data-validation and byte-reproduction checks remain separate.
 

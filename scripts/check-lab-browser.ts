@@ -32,6 +32,7 @@ try {
   assert.ok(!article!.headers()["content-security-policy"].includes("wasm-unsafe-eval"));
   await page.locator("[data-sentinels-activate]").click();
   assert.equal(await page.locator("[data-sentinels-workspace] iframe").getAttribute("src"), bundle);
+  assert.equal(await page.getByRole("link", { name: "Open the workspace in a separate page", exact: true }).getAttribute("href"), bundle);
   await page.frameLocator("[data-sentinels-workspace] iframe").locator("#activate:not([disabled])").waitFor();
   assert.equal(requests.filter(url => /\/runtime\/|\.whl|\.wasm/.test(url)).length, 0);
   results.push("article activation defers the immutable workspace and runtime under GPC/DNT");
@@ -46,6 +47,13 @@ try {
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("href")), "/");
   assert.equal(await page.locator(".site-header").getByRole("link", { name: "Labs", exact: true }).getAttribute("href"), "/labs/");
   assert.equal(await page.locator(".site-footer").getByRole("link", { name: "Golden Monkey R&D", exact: true }).getAttribute("href"), "/");
+  const skip = page.getByRole("link", { name: "Skip to release and source links", exact: true });
+  await skip.focus(); await page.keyboard.press("Tab");
+  assert.equal(await page.evaluate(() => document.activeElement?.tagName), "IFRAME", "Tab enters the released workspace");
+  await page.keyboard.press("Shift+Tab");
+  assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("href")), "#sentinels-workspace-links", "Shift+Tab returns to the site shell");
+  await page.keyboard.press("Enter"); await page.keyboard.press("Tab");
+  assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("href")), bundle, "Skip link reaches the direct workspace link");
   results.push("stable shell has navigation, breadcrumbs, footer, keyboard access and no analytics script");
   const runtime = await context.request.get(`${base}${bundle}worker.js`);
   assert.ok(runtime.headers()["content-security-policy"].includes("wasm-unsafe-eval"));

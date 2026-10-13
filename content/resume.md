@@ -48,6 +48,10 @@ A working Maryland employment explorer: Python and DuckDB produce a validated 20
 
 Directed an agent-assisted, source-only Python analyzer for required connections, producer-to-consumer handoffs and declared shapes. The separate AGPL repository includes strict Pydantic contracts, supported class/framework analysis, a CLI and an editable browser lab using the same analyzer wheel. CivicAtlas uses its released CLI for real pipeline contracts.
 
+{{< sentinels-coverage >}}
+A coverage ledger makes scoped declarations visible and requires a compatible contract or an explicit internal reason. Its inventory catches new unclassified declarations and stale entries without treating internal intent as evidence of correctness.
+{{< /sentinels-coverage >}}
+
 This is bounded static evidence, supported by explicit fixtures and separate data tests. It does not claim runtime correctness or validation on every execution path.
 
 [Try the editable lab](/labs/sentinels/) · [Inspect Sentinels](https://github.com/goldenmonkeyrnd/sentinels)

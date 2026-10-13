@@ -5,13 +5,14 @@
 <section class="sentinels-lab" aria-labelledby="sentinels-lab-title" data-sentinels-lab>
   <h2 id="sentinels-lab-title">Break a connection. Inspect the result. Repair it.</h2>
   <p id="sentinels-lab-scope">Edit synthetic Python files and contracts, then run fresh analysis. Follow findings to source lines, or download the project and report to reproduce the result with the CLI.</p>
+  <a href="#sentinels-workspace-links">Skip to release and source links</a>
   {{ if .direct }}
   <div class="sentinels-frame" data-sentinels-frame data-sentinels-workspace><iframe src="{{ $path }}" title="Sentinels editable integration-check lab" sandbox="allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox" referrerpolicy="same-origin" aria-describedby="sentinels-lab-scope"></iframe></div>
   {{ else }}
   <button class="button" type="button" data-sentinels-activate data-lab-url="{{ $path }}">Try the lab</button>
   <div class="sentinels-frame" data-sentinels-frame hidden></div>
   {{ end }}
-  <p class="sentinels-links">{{ if not .direct }}<a href="/labs/sentinels/">Open the lab directly</a> · {{ end }}<a href="https://github.com/goldenmonkeyrnd/sentinels/tree/{{ $release.source_sha }}">Inspect the exact source</a> · <a href="https://github.com/goldenmonkeyrnd/sentinels/releases/tag/{{ $release.tag }}">{{ $release.tag }} release and downloads</a></p>
+  <p class="sentinels-links" id="sentinels-workspace-links" tabindex="-1">{{ if not .direct }}<a href="/labs/sentinels/">Open the lab directly</a> · {{ end }}<a href="{{ $path }}" target="_blank" rel="noopener">Open the workspace in a separate page</a> · <a href="https://github.com/goldenmonkeyrnd/sentinels/tree/{{ $release.source_sha }}">Inspect the exact source</a> · <a href="https://github.com/goldenmonkeyrnd/sentinels/releases/tag/{{ $release.tag }}">{{ $release.tag }} release and downloads</a></p>
   <p>The Python runtime loads after <strong>Try the lab</strong> inside the workspace. Edits and reports stay in this browser, without automatic saving or lab telemetry. Analysis works offline after initialization.</p>
   <noscript><p>JavaScript is required for the browser lab. Download the release and run its CLI locally to inspect the same contracts.</p></noscript>
 </section>

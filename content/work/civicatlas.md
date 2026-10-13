@@ -40,4 +40,4 @@ The snapshot is deliberately fixed. Source URLs, retrieval dates, definitions an
 
 The [BLS CSV data slices documentation](https://www.bls.gov/cew/additional-resources/open-data/csv-data-slices.htm) explains the annual fields and disclosure conventions. Map geometry comes from the [Census cartographic boundary files](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html).
 
-The [repository](https://github.com/goldenmonkeyrnd/civicatlas) contains acquisition and validation commands, the API, the application and the data manifest. The [Sentinels lab](/work/agentic-engineering/) lets you edit examples and inspect the same released analyzer used for this pipeline’s declared integration contracts.
+The [repository](https://github.com/goldenmonkeyrnd/civicatlas) contains acquisition and validation commands, the API, the application and the data manifest. The [Sentinels lab](/labs/sentinels/) lets you edit examples and inspect the same released analyzer used for this pipeline’s declared integration contracts.

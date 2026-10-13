@@ -5,7 +5,7 @@ import { readArchive, sha256 } from "./sentinels-archive";
 import { readState, releaseURL, repository, stableTag, validateQualification, type Release } from "./sentinels-release";
 
 type GitHubAsset = { name: string; browser_download_url: string; size: number; digest: string | null };
-type GitHubRelease = { id: number; tag_name: string; draft: boolean; prerelease: boolean; assets: GitHubAsset[] };
+type GitHubRelease = { id: number; tag_name: string; draft: boolean; prerelease: boolean; immutable: boolean; assets: GitHubAsset[] };
 type Run = { id: number; head_sha: string; path: string; event: string; head_branch: string };
 type Job = { id: number; name: string; status: string; conclusion: string | null };
 export type Promotion = { tag: string; release_id: number; source_sha: string; qualification_sha256: string };
@@ -33,6 +33,7 @@ export async function preparePromotion(input: Promotion, remote: Remote = github
   if (policy.blocked.some(r => r.release_id === input.release_id || r.tag === input.tag || r.source_sha === input.source_sha)) throw new Error("Release is persistently blocked by site policy");
   const published = await remote.json<GitHubRelease>(`releases/${input.release_id}`);
   if (published.id !== input.release_id || published.tag_name !== input.tag || published.draft || published.prerelease) throw new Error("Dispatch does not identify a published stable release");
+  if (published.immutable !== true) throw new Error("Dispatch does not identify a published immutable release");
   const current = catalog.releases.find(r => r.archive.sha256 === pin.archive_sha256)!;
   if (newer(current.tag, input.tag)) throw new Error("Delayed dispatch cannot downgrade the current release");
   // A newer stable release carrying a qualification record takes priority. Never
@@ -40,7 +41,7 @@ export async function preparePromotion(input: Promotion, remote: Remote = github
   let exhausted = false;
   for (let page = 1; page <= 10; page++) {
     const releases = await remote.json<GitHubRelease[]>(`releases?per_page=100&page=${page}`);
-    if (releases.some(r => !r.draft && !r.prerelease && stableTag.test(r.tag_name) && !policy.blocked.some(b => b.release_id === r.id || b.tag === r.tag_name) && r.assets.some(a => a.name === "release-qualification.json") && newer(r.tag_name, input.tag))) throw new Error("A newer qualified stable release takes priority");
+    if (releases.some(r => !r.draft && !r.prerelease && r.immutable === true && stableTag.test(r.tag_name) && !policy.blocked.some(b => b.release_id === r.id || b.tag === r.tag_name) && r.assets.some(a => a.name === "release-qualification.json") && newer(r.tag_name, input.tag))) throw new Error("A newer qualified stable release takes priority");
     if (releases.length < 100) { exhausted = true; break; }
   }
   if (!exhausted) throw new Error("Release listing exceeded the bounded provenance scope");

@@ -41,7 +41,7 @@ function fixture(options: { nativeFailure?: boolean; browserMismatch?: boolean; 
   const record: Record<string,unknown> = {version:1,repository:"goldenmonkeyrnd/sentinels",tag,package_version:version,source_sha:source,qualification:{run_id:123,run_url:"https://github.com/goldenmonkeyrnd/sentinels/actions/runs/123",workflow_path:".github/workflows/release.yml",jobs},native:{asset:"native-qualification.json",python_versions:["3.12","3.13","3.14"],wheel_sha256:wheelHash},browser:{asset:"browser-qualification.json",wheel_sha256:wheelHash},assets:Object.fromEntries([...assets].map(([name,bytes])=>[name,{sha256:sha256(bytes),bytes:bytes.length}]))};
   if(options.unknownField)record.extra="untrusted";
   assets.set("release-qualification.json",Buffer.from(JSON.stringify(record)));
-  const published = { id: 411052090, tag_name:tag, draft:false, prerelease:false, assets:[...assets].map(([name,bytes])=>({name,size:bytes.length,digest:`sha256:${sha256(bytes)}`,browser_download_url:releaseURL(tag,name)})) };
+  const published = { id: 411052090, tag_name:tag, draft:false, prerelease:false, immutable:true, assets:[...assets].map(([name,bytes])=>({name,size:bytes.length,digest:`sha256:${sha256(bytes)}`,browser_download_url:releaseURL(tag,name)})) };
   const run = {id:123,head_sha:source,path:".github/workflows/release.yml",event:"push",head_branch:tag};
   const input: Promotion = {tag,release_id:published.id,source_sha:source,qualification_sha256:sha256(assets.get("release-qualification.json")!)};
   const remote: Remote = { async json<T>(path: string): Promise<T> {
@@ -66,6 +66,7 @@ function freshRoot(): string {
 const tests: {name:string;reason:RegExp;options?:Parameters<typeof fixture>[0];alter?:(f:ReturnType<typeof fixture>)=>void}[] = [
   {name:"dispatch checksum mismatch",reason:/qualification checksum mismatch/,alter:f=>{f.input.qualification_sha256="0".repeat(64)}},
   {name:"prerelease",reason:/published stable release/,alter:f=>{f.published.prerelease=true}},
+  {name:"mutable release",reason:/published immutable release/,alter:f=>{f.published.immutable=false}},
   {name:"wrong source tag",reason:/source tag differs/,alter:f=>{const original=f.remote.json;f.remote.json=async<T>(p:string)=>p.startsWith("git/ref/")?{ref:`refs/tags/${f.input.tag}`,object:{type:"commit",sha:"2".repeat(40)}}as T:original<T>(p)}},
   {name:"wrong qualification workflow",reason:/exact source tag\/workflow/,alter:f=>{f.run.path=".github/workflows/untrusted.yml"}},
   {name:"failed browser job",reason:/Qualification job has not passed/,alter:f=>{f.jobs[3].conclusion="failure"}},

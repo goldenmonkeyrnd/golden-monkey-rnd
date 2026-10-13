@@ -1,0 +1,5 @@
+{{ $pin := index hugo.Data "sentinels-release" }}
+{{ $catalog := index hugo.Data "sentinels-catalog" }}
+{{ $release := index (where $catalog.releases "archive.sha256" $pin.archive_sha256) 0 }}
+{{ $version := split (strings.TrimPrefix "v" $release.tag) "." }}
+{{ return (or (gt (int (index $version 0)) 0) (ge (int (index $version 1)) 2)) }}
