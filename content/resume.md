@@ -19,16 +19,16 @@ Data engineer with three years delivering state public-health and human-services
 - Delivered Azure infrastructure for an Indiana Department of Health Streamlit/DuckDB census-data application used by epidemiologists. Another developer built the application; my ownership covered its supporting cloud infrastructure.
 - Translated agency cybersecurity findings and Azure Policy requirements into Bicep remediations. Implemented private storage connectivity, network isolation, managed identities and Microsoft Entra group-based access aligned with agency and NIST 800-53 requirements.
 - Verified deployments and reviewed remediations jointly with the agency cybersecurity team. Prepared an Azure DevOps wiki, presented the infrastructure and Bicep deployment, and handed off a partial CI/CD foundation with automated Trivy scanning.
-- Designed a screening tool for Iowa’s childcare voucher intake workflow that removed Social Security numbers, phone numbers and other identifiers before records reached storage, using a threat model that included attempts to locate children.
+- Designed a data-ingestion screening tool for Iowa’s childcare voucher workflow that removed personally identifiable information (PII), including Social Security numbers and phone numbers, before records reached storage.
 - Validated multi-year hospital discharge datasets for completeness and consistency; developed deduplication and schema-alignment logic. Migrated maternal and child health records and produced recurring reporting dashboards.
 - Delivered recurring grant-funded data outputs on fixed deadlines. Clarified data definitions with program stakeholders, followed up on inconsistent submissions and documented workflows and operational procedures.
 
 ### Data Engineering Training & Client Assignment — Revature
 
-**2022 – March 2023 · Walmart client assignment**
+**April 2022 – March 2023 · Walmart client assignment**
 
-- Completed data-engineering training in Python, Scala, and Linux command-line fundamentals.
-- Built a Census Bureau data pipeline in Azure Data Factory as a training capstone.
+- Completed data-engineering training in Python, Scala, and Linux; built a Census Bureau data pipeline in Azure Data Factory as a training capstone.
+- Assigned to Walmart’s data-engineering team through Revature; role scope included Azure Data Factory, Apache Spark/PySpark, ADLS Gen2, and Delta Lake, with production Azure Data Factory access.
 
 ### IT Support — Covetrus
 
@@ -71,11 +71,13 @@ This is bounded static evidence, supported by explicit fixtures and separate dat
 
 ## Technical skills
 
-**Data engineering:** Python, SQL, Azure Data Factory, Azure Synapse, DuckDB, Parquet, data quality, deduplication, schema alignment and reproducible pipelines.
+**Data engineering:** Python, SQL, pandas, Apache Spark, PySpark, Delta Lake, ETL/ELT, data ingestion and transformation, pipeline orchestration, data quality validation, deduplication, schema alignment, Parquet.
 
-**Cloud engineering:** Azure Functions, Bicep, Azure Policy, Microsoft Entra, managed identities, private connectivity, Cloudflare Workers and D1.
+**Cloud data platforms:** Microsoft Azure, Azure Data Factory (ADF), Azure Databricks, Azure Synapse Analytics, Azure Data Lake Storage Gen2 (ADLS Gen2), Azure SQL, Azure Blob Storage, DuckDB.
 
-**AI-assisted delivery:** context engineering, source documentation, test-driven development, static analysis, pre-commit checks, GitHub Actions and Azure DevOps.
+**Cloud infrastructure and delivery:** Azure Functions, Bicep, Infrastructure as Code (IaC), Azure Policy, Microsoft Entra ID, managed identities, private connectivity, Git, CI/CD, Azure DevOps, GitHub Actions, Trivy, Cloudflare Workers, D1.
+
+**AI-assisted engineering:** context engineering, test-driven development (TDD), integration testing, static analysis, Pydantic, pre-commit checks, source documentation.
 
 ## Education and certification
 
