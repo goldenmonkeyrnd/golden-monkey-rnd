@@ -12,11 +12,12 @@ let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
 const results: string[] = [];
 try {
   if (!process.env.SENTINELS_SITE_URL) {
-    server = Bun.spawn([process.execPath, "node_modules/wrangler/bin/wrangler.js", "dev", "--port", "8875", "--local"], { stdout: "ignore", stderr: "inherit", env: { ...process.env, WRANGLER_SEND_METRICS: "false" } });
+    server = Bun.spawn(["node", "node_modules/wrangler/bin/wrangler.js", "dev", "--port", "8875", "--local"], { detached: true, stdout: "ignore", stderr: "inherit", env: { ...process.env, WRANGLER_SEND_METRICS: "false" } });
     let ready = false;
-    for (let n = 0; n < 100; n++) {
+    const deadline = Date.now() + 20_000;
+    while (Date.now() < deadline) {
       if (server.exitCode !== null) throw new Error("Task-owned preview exited before qualification");
-      try { if ((await fetch(`${base}/labs/sentinels/`)).ok) { ready = true; break; } } catch { /* Preview is starting. */ }
+      try { if ((await fetch(`${base}/labs/sentinels/`, { signal: AbortSignal.timeout(500) })).ok) { ready = true; break; } } catch { /* Preview is starting. */ }
       await Bun.sleep(200);
     }
     if (!ready) throw new Error("Task-owned preview initialization exceeded 20 seconds");
@@ -83,5 +84,11 @@ try {
   console.log(`Verified ${results.length} real browser site integration checks.`);
 } finally {
   await browser?.close();
-  if (server) { server.kill(); await server.exited; }
+  if (server) {
+    // The detached group contains only this check's Wrangler and workerd children.
+    // Stop that group even when the launcher exited before one of its children.
+    try { process.kill(-server.pid, "SIGTERM"); } catch { /* Already stopped. */ }
+    const stopped = await Promise.race([server.exited.then(() => true), Bun.sleep(3000).then(() => false)]);
+    if (!stopped) { try { process.kill(-server.pid, "SIGKILL"); } catch { /* Already stopped. */ } }
+  }
 }
