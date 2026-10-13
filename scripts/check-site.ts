@@ -41,7 +41,8 @@ for(const path of ['/labs/sentinels/_bundles/*','/labs/sentinels/v0.1.0/*']){
  const scope=sections.find(section=>section.startsWith(path));
  if(!scope?.includes("worker-src 'self'")||!scope.includes("frame-ancestors 'self'"))throw new Error('Missing workspace worker/framing policy');
 }
-if(!sections.find(section=>section.startsWith('/labs/sentinels/_bundles/*'))?.includes('immutable'))throw new Error('Digest asset URLs require immutable caching');
+const digestPolicy=sections.find(section=>section.startsWith('/labs/sentinels/_bundles/*'));
+if(!digestPolicy?.includes('immutable')||!digestPolicy.includes('no-transform'))throw new Error('Digest asset URLs require immutable caching without delivery-time transformations');
 const redirects=readFileSync(join(root,'_redirects'),'utf8').trim().split('\n');
 if(redirects.join('\n')!==['/labs/sentinels/v0.1.0 /labs/sentinels/ 302','/labs/sentinels/v0.1.0/ /labs/sentinels/ 302','/labs/sentinels/v0.1.0/index.html /labs/sentinels/ 302'].join('\n'))throw new Error('Legacy redirects must affect landing pages only');
 console.log(`Checked ${files.filter(p=>p.endsWith('.html')).length} pages, stable shell, deferred embedding and ${catalog.releases.length} retained releases.`);
