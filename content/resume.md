@@ -23,6 +23,19 @@ Data engineer with three years delivering state public-health and human-services
 - Validated multi-year hospital discharge datasets for completeness and consistency; developed deduplication and schema-alignment logic. Migrated maternal and child health records and produced recurring reporting dashboards.
 - Delivered recurring grant-funded data outputs on fixed deadlines. Clarified data definitions with program stakeholders, followed up on inconsistent submissions and documented workflows and operational procedures.
 
+### Data Engineering Training & Client Assignment — Revature
+
+**2022 – March 2023 · Walmart client assignment**
+
+- Completed data-engineering training in Python, Scala, and Linux command-line fundamentals.
+- Built a Census Bureau data pipeline in Azure Data Factory as a training capstone.
+
+### IT Support — Covetrus
+
+**Remote · April 2021 – March 2022**
+
+- Provided remote IT help-desk support.
+
 ### Satellite Communications Systems Operator-Maintainer (25S) — U.S. Army
 
 **2014 – 2021**
