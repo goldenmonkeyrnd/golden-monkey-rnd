@@ -25,6 +25,20 @@
         "file": "data/sentinels-provenance/v0.1.1.json",
         "sha256": "919be51114a997b36e4f102fc0d2d7b20b8c3105e23da7d97d2f675aced98de4"
       }
+    },
+    {
+      "tag": "v0.2.0",
+      "release_id": 411117263,
+      "source_sha": "8f5a79543d5ad5f8d6ceaa907112d65962f2852a",
+      "archive": {
+        "url": "https://github.com/goldenmonkeyrnd/sentinels/releases/download/v0.2.0/sentinels-lab-v0.2.0.tar.gz",
+        "sha256": "5c9c8b2724eff4619a7e1311371ff1a722886f7df0b4c8b98b7227ed3e5855e3",
+        "bytes": 8290298
+      },
+      "qualification": {
+        "file": "data/sentinels-provenance/v0.2.0.json",
+        "sha256": "2687e2d87a5c831d3afcd553b20cb6c8b0f95397cbc19f675a792fac5f5198b9"
+      }
     }
   ]
 }

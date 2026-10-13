@@ -1,0 +1,89 @@
+{
+  "assets": {
+    "LICENSE": {
+      "bytes": 34523,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    "NOTICE": {
+      "bytes": 791,
+      "sha256": "4f39f5d4a17b2de80a985529c6be7bd5d33fdb60a35723749768dc95932d0ac5"
+    },
+    "THIRD_PARTY_NOTICES.txt": {
+      "bytes": 19460,
+      "sha256": "e77de894464d02cba2f7a0d30f5cc49780890e4b4afdb923fdd00dc9340f2570"
+    },
+    "assets-manifest.json": {
+      "bytes": 4540,
+      "sha256": "772dda348758130240546b14590f1c996632483fdd1dbb045993fe1525e3797d"
+    },
+    "browser-qualification.json": {
+      "bytes": 3205,
+      "sha256": "ff587e85645b0e9b5a4952ff18a112113409b1d64a9d6571556b14a36685edb4"
+    },
+    "goldenmonkey_sentinels-0.2.0-py3-none-any.whl": {
+      "bytes": 47964,
+      "sha256": "32c601e4efded91cf1d36dddc5a9734e4bc8dc5704df073fbb9f87a38f7ba7c3"
+    },
+    "goldenmonkey_sentinels-0.2.0.tar.gz": {
+      "bytes": 218586,
+      "sha256": "f095718a4efa18a7de9dc03ec61b2c6d4448ee9c5f78805bc43e61daeebc2dbb"
+    },
+    "native-qualification.json": {
+      "bytes": 3495,
+      "sha256": "2d2d5c0570ef5df3b5901286e7caf1f3942d55be5749c5acda91657488b11954"
+    },
+    "sentinels-lab-v0.2.0.tar.gz": {
+      "bytes": 8290298,
+      "sha256": "5c9c8b2724eff4619a7e1311371ff1a722886f7df0b4c8b98b7227ed3e5855e3"
+    },
+    "sentinels-source-v0.2.0.tar.gz": {
+      "bytes": 220027,
+      "sha256": "bd1f491bf80452ee1ec079b5fb74a1d236855e07e2f56a98f9094e9105718c89"
+    }
+  },
+  "browser": {
+    "asset": "browser-qualification.json",
+    "wheel_sha256": "32c601e4efded91cf1d36dddc5a9734e4bc8dc5704df073fbb9f87a38f7ba7c3"
+  },
+  "native": {
+    "asset": "native-qualification.json",
+    "python_versions": [
+      "3.12",
+      "3.13",
+      "3.14"
+    ],
+    "wheel_sha256": "32c601e4efded91cf1d36dddc5a9734e4bc8dc5704df073fbb9f87a38f7ba7c3"
+  },
+  "package_version": "0.2.0",
+  "qualification": {
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 115074078004,
+        "name": "Qualify Python 3.12"
+      },
+      {
+        "conclusion": "success",
+        "id": 115074078059,
+        "name": "Qualify Python 3.13"
+      },
+      {
+        "conclusion": "success",
+        "id": 115074077964,
+        "name": "Qualify Python 3.14"
+      },
+      {
+        "conclusion": "success",
+        "id": 115074077909,
+        "name": "Qualify browser"
+      }
+    ],
+    "run_id": 38328947430,
+    "run_url": "https://github.com/goldenmonkeyrnd/sentinels/actions/runs/38328947430",
+    "workflow_path": ".github/workflows/release.yml"
+  },
+  "repository": "goldenmonkeyrnd/sentinels",
+  "source_sha": "8f5a79543d5ad5f8d6ceaa907112d65962f2852a",
+  "tag": "v0.2.0",
+  "version": 1
+}
