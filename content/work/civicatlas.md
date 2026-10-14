@@ -1,43 +1,49 @@
 ---
 images: ["social/civicatlas-monkey.png"]
-social_image_alt: "CivicAtlas: Maryland, at work. A map of all 24 Maryland jurisdictions. 2024 private-sector employment snapshot."
+social_image_alt: "CivicAtlas, a Maryland public-data application by Golden Monkey R&D."
 title: "CivicAtlas"
 eyebrow: "Public data · Working application"
-description: "Compare 24 Maryland jurisdictions using a reproducible 2024 BLS private-sector employment snapshot, with sources behind every figure."
-lead: "Where is Maryland’s private-sector employment concentrated, and how do two jurisdictions compare?"
+description: "Explore Maryland neighborhoods, compare outreach locations, and inspect the public data and directed-road calculations behind the result."
+lead: "Where could three additional outreach sites bring benefits assistance closer?"
 ---
-[Open CivicAtlas](https://atlas.goldenmonkey.dev/) · [Inspect the source code](https://github.com/goldenmonkeyrnd/civicatlas)
+[Try the Maryland Outreach Lab](https://atlas.goldenmonkey.dev/?view=plan) · [Inspect the source code](https://github.com/goldenmonkeyrnd/civicatlas)
 
-## A comparison you can check
+## A decision you can explore
 
-CivicAtlas brings together employment, establishments, average annual pay and industry composition for Maryland’s 24 county-equivalent jurisdictions. Baltimore city and Baltimore County remain distinct. A county map and equivalent selectors let you compare two jurisdictions; the source inspector explains the numbers behind the view.
+CivicAtlas joins neighborhood conditions, documented assistance locations, public libraries, and a real street network into an interactive outreach-planning demonstration. Start in Baltimore, suggest additional library sites, replace a location, or close a road. The map and comparison show what changes; source inspection explains where the inputs came from.
 
-The application uses a **2024 private-sector employment snapshot** from the Bureau of Labor Statistics Quarterly Census of Employment and Wages. These are covered workplace jobs, not a count of residents who work. The display preserves suppressed and missing observations as unavailable, and computes sector shares against the matching county private-sector total.
+The public-data foundation covers **4,079 Maryland block groups, 1,475 census tracts, and all 24 county-equivalent jurisdictions**. Explore household income, poverty, rent burden, vehicle availability, internet access, and workforce estimates. County employment and nominal pay retain their own geography, with 2010–2024 history. The commuting layer shows Maryland home–work relationships from 2021.
 
-## From published data to a working API
+## The work behind the map
 
-Python acquires official county CSVs and records their hashes. DuckDB validates identifiers and observations, then produces Parquet and a D1 import artifact. Census boundary geometry supplies the map. The production application queries Cloudflare D1 through a Worker API; React and TypeScript present the comparison and source evidence.
+This project grew from a local public-data corpus. The acquisition step extracts bounded Maryland records and pins their source hashes. Routine publication builds run offline. Python and DuckDB preserve geographic identifiers, estimates, margins of error, denominators, source periods, and unavailable observations; validation checks the actual geographic joins and byte reproduction.
 
-The snapshot is deliberately fixed. Source URLs, retrieval dates, definitions and transformation details make it possible to reproduce a displayed figure. Application deployments retain the data revision; importing a new snapshot is a separate checked action.
+The location inventory required reconciliation. Official map points can lag relocations and closures. Current library directories and public-assistance records supply verification evidence. Corrected, closed, unresolved, and excluded records remain inspectable, and automatic suggestions use verified candidate locations.
+
+The published release includes **172 verified library candidates and 38 benefits-assistance sites** across all 24 jurisdictions. Thirty address-correction records retain their evidence; six documented closures and 51 unresolved or excluded locations remain visible. The default Baltimore scenario adds **19,201 represented households** within three modeled road miles. A road-closure example moves 573 represented households beyond the threshold, and reopening restores the original routes and coverage.
 
 | Layer | Responsibility |
 | --- | --- |
-| Python + DuckDB | Acquisition, validation and reproducible data artifacts |
-| Cloudflare D1 | Published county totals, sector observations and provenance |
-| Cloudflare Worker | Parameterized public queries and explicit errors |
-| React + TypeScript | County comparison, map and source inspector |
-| GitHub Actions | Validation and deployment automation |
+| Python + DuckDB | Bounded acquisition, statistical transformations, reconciliation, reproducible artifacts |
+| Cloudflare D1 + Worker | Published observations, source inspection, parameterized queries, explicit failures |
+| React + TypeScript + MapLibre | Neighborhood exploration, comparisons, scenario controls, accessible tables |
+| Browser Web Worker | Directed-road coverage and deterministic site suggestions |
+| GitHub Actions | Data reproduction, contract checks, tests, and checked deployment |
 
-## Engineering choices that matter
+## An explicit model
 
-- FIPS identifiers stay strings, preserving leading zeros and jurisdiction identity.
-- Suppression is represented explicitly. An encoded zero in a withheld observation is not reported as a measured zero.
-- The public API supports specific queries; visitors cannot submit arbitrary SQL.
-- A service failure produces an error and a retry action. It does not substitute invented results.
-- Aggregate engagement events measure interactions without storing persistent visitor identifiers.
+Each neighborhood is represented by its Census internal point snapped to an existing motor-road node. The graph preserves shared-node junctions, recorded one-way directions, and motor-vehicle access restrictions. County study areas include surrounding roads to avoid artificial administrative barriers.
 
-## Check the sources
+The recommendation selects the candidate adding the most previously uncovered represented households, repeats, and breaks ties consistently. Visitors can use total households, households without vehicles, or households without internet as separate scenarios. They can export and replay the exact site choices, closures, distance threshold, and data revisions.
 
-The [BLS CSV data slices documentation](https://www.bls.gov/cew/additional-resources/open-data/csv-data-slices.htm) explains the annual fields and disclosure conventions. Map geometry comes from the [Census cartographic boundary files](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html).
+Physarum-inspired route reinforcement makes the assigned routes visible. Its animation follows the calculated demand; pausing it does not change the result. Coverage describes neighborhood points within a modeled road distance. It does not establish household eligibility, attendance, travel time, site capacity, or an optimal deployment plan.
 
-The [repository](https://github.com/goldenmonkeyrnd/civicatlas) contains acquisition and validation commands, the API, the application and the data manifest. The [Sentinels lab](/labs/sentinels/) lets you edit examples and inspect the same released analyzer used for this pipeline’s declared integration contracts.
+## Follow the evidence
+
+Every displayed observation links to its source, period, universe, transformation, and raw fields. Comparison CSVs retain denominators and margins of error. A printable briefing records the scenario and its assumptions. Reconciliation and release manifests expose the data-quality decisions behind publication.
+
+Application and data releases are checked separately, with a production recovery export retained before rollout. The [repository](https://github.com/goldenmonkeyrnd/civicatlas) contains the runnable setup and verification commands. The [Sentinels lab](/labs/sentinels/) lets visitors inspect the same released structural checker used for the pipeline's declared integration requirements.
+
+The street-graph reduction was checked against the original Baltimore network at one, three, and ten miles, preserving coverage, recommendations, and route distances. Across all jurisdictions, 120 scenario runs checked replay, conservation, alternative measures, additions, and closures. On the demonstration machine, Baltimore's calculation took 701 ms after loading the graph; the slowest county took 1,262 ms. [Recorded qualification evidence](https://github.com/goldenmonkeyrnd/civicatlas/blob/main/data/qualification/simulation.json) separates those engine measurements from browser startup.
+
+The demonstration draws on [Nava Labs' Maryland benefits-access work](https://www.navapbc.com/news/nava-labs-casey-foundation) and [Pratt Library's assistance programs](https://www.prattlibrary.org/services/social-impact-programs/social-worker-in-the-library): a concrete public-service question, supported by inspectable engineering.
