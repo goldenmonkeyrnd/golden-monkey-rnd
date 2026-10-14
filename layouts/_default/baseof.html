@@ -7,6 +7,7 @@
   <meta name="author" content="Pauline Yeary">
   <meta name="theme-color" content="#202B33">
   <link rel="canonical" href="{{ .Permalink }}">
+  {{ with .Site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" title="Pauline Yeary’s blog" href="{{ .Permalink }}">{{ end }}{{ end }}
   {{ partial "opengraph.html" . }}
   {{ partial "twitter_cards.html" . }}
   {{ with resources.Get (index (.Params.images | default .Site.Params.images) 0) }}
@@ -26,6 +27,7 @@
   <link rel="preload" href="/fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
   {{ $css := resources.Get "css/site.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ $blogcss := resources.Get "css/blog.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ $blogcss.RelPermalink }}" integrity="{{ $blogcss.Data.Integrity }}">
   {{ if ne .Params.analytics false }}{{ $js := resources.Get "js/site.js" | minify | fingerprint }}<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" data-analytics-token="{{ .Site.Params.webAnalyticsToken }}"></script>{{ end }}
   {{ if .Params.sentinels_lab }}{{ $labjs := resources.Get "js/sentinels-lab.js" | minify | fingerprint }}<script defer src="{{ $labjs.RelPermalink }}" integrity="{{ $labjs.Data.Integrity }}"></script>{{ end }}
 </head>

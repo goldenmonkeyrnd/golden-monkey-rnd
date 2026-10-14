@@ -21,6 +21,42 @@ bun run check
 
 `check` runs strict TypeScript validation, archive safety and promotion/rollback regression checks, and validates public links, retained inventories, the stable shell and scoped runtime policy. `bunx playwright install chromium` followed by `bun run check:browser` runs real Pyodide analysis through a task-owned Wrangler preview, including failure/repair, offline analysis, GPC/DNT, mobile layout and legacy assets. The downloadable two-page PDF is public; its editable source is retained privately. The case studies distinguish delivered experience, recorded demonstrations and bounded verification.
 
+## Write a blog post
+
+Posts are Markdown files in `content/blog/`. From this repository, create a draft with a short, lowercase, hyphenated name:
+
+```sh
+mise run post -- a-thought-worth-keeping
+```
+
+This creates `content/blog/a-thought-worth-keeping/index.md`. Open that file in your editor, change the title, optionally add a one-sentence `description`, and write below the closing `+++`. The name in the command becomes the URL; the title can change without changing the URL. If you do not use mise, the equivalent command is `hugo new content --kind blog blog/a-thought-worth-keeping/index.md`.
+
+Preview while you write:
+
+```sh
+mise run dev
+```
+
+Open <http://localhost:1313/blog/>. Saving a file refreshes the preview, including future-dated posts. Drafts have a visible **Draft preview** label locally and are omitted from production builds, the public blog, RSS, and the sitemap. Stop the preview with Ctrl+C. If port 1313 is already occupied, use the existing preview or stop the process you started before trying again.
+
+There is no required topic, length, or outline. Markdown supports paragraphs, `## Headings`, lists, links, blockquotes, and fenced code blocks. Put images beside `index.md` and insert them with `![Describe the image](photo.jpg)`; bundle images stay out of production while the post is a draft. Images hosted on other sites are blocked by this site's content policy.
+
+To publish:
+
+1. Set `draft = false`. Check the `date`: future-dated posts are excluded until a build runs after that time. There is no scheduled publisher; for immediate publication, use today's date or an earlier date. Dates use Eastern time when no explicit timezone is supplied.
+2. Run `mise run build` and `mise run check`.
+3. Commit just the post and its images, then push to `main`:
+
+   ```sh
+   git add content/blog/a-thought-worth-keeping/
+   git commit -m "Publish a thought worth keeping"
+   git push origin main
+   ```
+
+The existing GitHub Actions workflow validates and deploys the site. After it succeeds, the post appears at `https://goldenmonkey.dev/blog/a-thought-worth-keeping/`, newest first in the blog, and in the [blog feed](https://goldenmonkey.dev/blog/index.xml). To revise a published post, edit the same file and repeat the build, check, commit, and push steps.
+
+**Draft status controls website publication, not repository privacy.** This website's GitHub repository is public. Keep unfinished or private writing uncommitted; pushing a draft makes its source public even though the website hides it. Avoid broad `git add .` commands while drafts are present. A post that is missing after deployment is usually still marked as a draft, dated in the future, or part of a failed deployment; check those before changing the URL.
+
 ## Sentinels lab
 
 The analyzer, browser code, examples and runtime bundle belong to [goldenmonkeyrnd/sentinels](https://github.com/goldenmonkeyrnd/sentinels), licensed AGPL-3.0-only. The stable public address is [goldenmonkey.dev/labs/sentinels/](https://goldenmonkey.dev/labs/sentinels/), with shared Hugo navigation, breadcrumbs and footer. It embeds the exact released workspace named by the committed pin; its source link uses the qualified commit. The original v0.1.0 release is explicitly grandfathered by its previously verified archive and wheel digests. Do not edit imported files or silently replace retained identities.

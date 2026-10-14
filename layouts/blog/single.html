@@ -1,0 +1,12 @@
+{{ define "main" }}
+<article class="article shell blog-post">
+  <header class="article-header">
+    <a class="text-link blog-back" href="/blog/">← All posts</a>
+    <h1>{{ .Title }}</h1>
+    <p class="post-meta">Pauline Yeary <span aria-hidden="true">·</span> <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "January 2, 2006" }}</time> <span aria-hidden="true">·</span> {{ .ReadingTime }} min read{{ if .Draft }} <span class="draft-label">Draft preview</span>{{ end }}</p>
+    {{ with .Params.lead }}<p class="article-lead">{{ . }}</p>{{ end }}
+  </header>
+  <div class="prose">{{ .Content }}</div>
+  <footer class="post-footer"><a class="text-link" href="/blog/">More from the notebook <span aria-hidden="true">→</span></a>{{ with (.Site.GetPage "/blog").OutputFormats.Get "rss" }}<a href="{{ .RelPermalink }}">Subscribe via RSS</a>{{ end }}</footer>
+</article>
+{{ end }}

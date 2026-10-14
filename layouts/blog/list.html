@@ -1,0 +1,29 @@
+{{ define "main" }}
+<section class="article shell blog-index">
+  <header class="article-header">
+    <p class="eyebrow">Pauline’s notebook</p>
+    <h1>{{ .Title }}</h1>
+    <p class="article-lead">{{ .Params.lead }}</p>
+    <div class="prose">{{ .Content }}</div>
+    {{ with .OutputFormats.Get "rss" }}<a class="text-link" href="{{ .RelPermalink }}">Subscribe via RSS <span aria-hidden="true">↗</span></a>{{ end }}
+  </header>
+  {{ $pager := .Paginate .RegularPages.ByDate.Reverse 10 }}
+  <div class="blog-entries">
+    {{ range $pager.Pages }}
+    <article class="blog-entry">
+      <div class="post-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>{{ if .Draft }}<span class="draft-label">Draft preview</span>{{ end }}</div>
+      <div><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2><p>{{ .Description | default (.Summary | plainify | truncate 220) }}</p><a class="text-link" href="{{ .RelPermalink }}" aria-label="Read {{ .Title }}">Read the post <span aria-hidden="true">→</span></a></div>
+    </article>
+    {{ else }}
+    <p class="blog-empty">No posts published yet.</p>
+    {{ end }}
+  </div>
+  {{ if gt $pager.TotalPages 1 }}
+  <nav class="blog-pagination" aria-label="Blog pages">
+    {{ with $pager.Prev }}<a class="text-link" href="{{ .URL }}">← Newer posts</a>{{ end }}
+    <span>Page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}</span>
+    {{ with $pager.Next }}<a class="text-link" href="{{ .URL }}">Older posts →</a>{{ end }}
+  </nav>
+  {{ end }}
+</section>
+{{ end }}

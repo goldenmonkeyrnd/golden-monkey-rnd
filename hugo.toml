@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "Pauline Yeary · Golden Monkey R&D"
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
+timeZone = "America/New_York"
 [params]
   images = ["social/portfolio-lab.png"]
   social_image_alt = "Pauline Yeary, Data & AI Engineer. Golden-monkey scientists collaborate with holographic AI assistants. I use AI. I check its work."
@@ -13,5 +14,7 @@ disableKinds = ["taxonomy", "term"]
   webAnalyticsToken = "ff5bdde1922f4f738f5c1b221962ff6c"
 [markup.goldmark.renderer]
   unsafe = false
+[markup.highlight]
+  noClasses = false
 [minify]
   minifyOutput = true

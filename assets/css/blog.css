@@ -1,0 +1,32 @@
+.blog-index .article-header { max-width: 800px; }
+.blog-index .article-header h1 { font-size: clamp(4rem, 9vw, 7rem); }
+.blog-index .article-lead { margin-bottom: 16px; }
+.blog-entries { max-width: 1000px; }
+.blog-entry { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 40px; border-top: 1px solid var(--line); padding-block: 32px; }
+.blog-entry h2 { font-size: 2rem; margin-bottom: 16px; overflow-wrap: anywhere; }
+.blog-entry h2 a { color: var(--charcoal); text-decoration: none; }
+.blog-entry h2 a:hover { text-decoration: underline; }
+.blog-entry p { max-width: 680px; margin-bottom: 10px; }
+.post-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; font-size: .8rem; line-height: 1.8; }
+.blog-entry .post-meta { align-content: start; }
+.draft-label { padding: 2px 9px; border: 1px solid var(--gold); border-radius: 4px; background: var(--paper); font-weight: 700; }
+.blog-empty { border-top: 1px solid var(--line); padding-block: 32px; }
+.blog-pagination { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 24px; font-size: .9rem; }
+.blog-back { margin-bottom: 28px; font-size: .9rem; }
+.blog-post .article-header h1 { overflow-wrap: anywhere; }
+.blog-post .prose { max-width: 740px; }
+.post-footer { display: flex; flex-wrap: wrap; align-items: baseline; gap: 24px; max-width: 740px; border-top: 1px solid var(--line); margin-top: 48px; padding-top: 24px; font-size: .9rem; }
+.notebook-section { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; border-top: 1px solid var(--line); padding-block: 40px 65px; }
+.notebook-section h2 { max-width: 500px; }
+.prose img { display: block; max-width: 100%; height: auto; margin-block: 24px; }
+.prose pre { max-width: 100%; overflow-x: auto; padding: 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); line-height: 1.6; }
+.prose pre code { overflow-wrap: normal; font-size: .86em; }
+.prose .highlight { max-width: 100%; }
+.prose .chroma .k, .prose .chroma .kd, .prose .chroma .kn, .prose .chroma .kt { color: var(--blue); font-weight: bold; }
+.prose .chroma .s, .prose .chroma .s1, .prose .chroma .s2 { color: #87510c; }
+.prose .chroma .c, .prose .chroma .c1, .prose .chroma .cm { color: #52616b; font-style: italic; }
+@media (max-width: 760px) {
+  .blog-entry { grid-template-columns: 1fr; gap: 12px; padding-block: 26px; }
+  .blog-entry h2 { font-size: 1.8rem; }
+  .notebook-section { grid-template-columns: 1fr; gap: 8px; padding-block: 30px 45px; }
+}
