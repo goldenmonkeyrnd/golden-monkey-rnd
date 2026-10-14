@@ -2,22 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .IsHome }}Pauline Yeary · Data & AI Engineer{{ else }}{{ .Title }} · Pauline Yeary{{ end }}</title>
-  <meta name="description" content="{{ .Description | default .Site.Params.description }}">
-  <meta name="author" content="Pauline Yeary">
+  {{ partial "seo.html" . }}
   <meta name="theme-color" content="#202B33">
-  <link rel="canonical" href="{{ .Permalink }}">
   {{ with .Site.GetPage "/blog" }}{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" title="Pauline Yeary’s blog" href="{{ .Permalink }}">{{ end }}{{ end }}
-  {{ partial "opengraph.html" . }}
-  {{ partial "twitter_cards.html" . }}
-  {{ with resources.Get (index (.Params.images | default .Site.Params.images) 0) }}
-  <meta property="og:image:secure_url" content="{{ .Permalink }}">
-  <meta property="og:image:width" content="{{ .Width }}">
-  <meta property="og:image:height" content="{{ .Height }}">
-  <meta property="og:image:type" content="{{ .MediaType.Type }}">
-  {{ end }}
-  <meta property="og:image:alt" content="{{ .Params.social_image_alt | default .Site.Params.social_image_alt }}">
-  <meta name="twitter:image:alt" content="{{ .Params.social_image_alt | default .Site.Params.social_image_alt }}">
   <link rel="icon" href="/favicon.svg?v=monkey-20261012" type="image/svg+xml">
   <link rel="icon" href="/favicon-32x32.png?v=monkey-20261012" type="image/png" sizes="32x32">
   <link rel="icon" href="/favicon-16x16.png?v=monkey-20261012" type="image/png" sizes="16x16">

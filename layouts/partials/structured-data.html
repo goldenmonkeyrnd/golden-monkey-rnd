@@ -1,0 +1,20 @@
+{{- $page := .page -}}
+{{- $seo := .seo -}}
+{{- $author := dict "@type" "Person" "@id" ("about/#pauline" | absURL) "name" "Pauline Yeary" "url" ("about/" | absURL) -}}
+{{- $data := dict -}}
+{{- if $page.IsHome -}}
+  {{- $site := dict "@type" "WebSite" "@id" ("#website" | absURL) "name" $page.Site.Title "url" $page.Site.BaseURL "author" (dict "@id" (index $author "@id")) -}}
+  {{- $data = dict "@context" "https://schema.org" "@graph" (slice $site $author) -}}
+{{- else if and $seo.post (not $page.Draft) -}}
+  {{- $data = dict "@context" "https://schema.org" "@type" "BlogPosting" "@id" (printf "%s#article" $seo.url) "headline" $page.Title "description" $seo.description "url" $seo.url "mainEntityOfPage" $seo.url "author" $author "inLanguage" "en-US" -}}
+  {{- with $page.PublishDate -}}
+    {{- $data = merge $data (dict "datePublished" (.Format "2006-01-02T15:04:05Z07:00")) -}}
+  {{- end -}}
+  {{- with $page.Lastmod -}}
+    {{- $data = merge $data (dict "dateModified" (.Format "2006-01-02T15:04:05Z07:00")) -}}
+  {{- end -}}
+  {{- with $seo.image -}}
+    {{- $data = merge $data (dict "image" .url) -}}
+  {{- end -}}
+{{- end -}}
+{{- with $data }}<script type="application/ld+json">{{ . | jsonify | safeJS }}</script>{{ end -}}

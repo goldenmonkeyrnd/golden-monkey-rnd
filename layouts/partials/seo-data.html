@@ -1,0 +1,22 @@
+{{- $title := printf "%s · Pauline Yeary" .Title -}}
+{{- $url := .Permalink -}}
+{{- if .IsHome -}}
+  {{- $title = "Pauline Yeary · Data & AI Engineer" -}}
+{{- else if and .IsSection (eq .Section "blog") -}}
+  {{- $pager := partial "blog-paginator.html" . -}}
+  {{- if gt $pager.PageNumber 1 -}}
+    {{- $title = printf "%s · Page %d · Pauline Yeary" .Title $pager.PageNumber -}}
+    {{- $url = $pager.URL | absURL -}}
+  {{- end -}}
+{{- end -}}
+{{- $description := .Description -}}
+{{- if and (not $description) .IsPage -}}
+  {{- $description = .Summary | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace | truncate 160 -}}
+{{- end -}}
+{{- $description = $description | default .Site.Params.description | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+{{- $image := dict -}}
+{{- $images := .Params.images | default .Site.Params.images -}}
+{{- with $images -}}
+  {{- $image = partial "seo-image.html" (dict "page" $ "name" (index . 0)) -}}
+{{- end -}}
+{{- return (dict "title" $title "description" $description "url" $url "image" $image "post" (and .IsPage (eq .Section "blog"))) -}}

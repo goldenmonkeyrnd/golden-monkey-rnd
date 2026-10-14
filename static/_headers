@@ -1,5 +1,5 @@
 /*
-  Cache-Control: public, max-age=0, must-revalidate, no-transform
+  Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
@@ -10,6 +10,9 @@
 /images/*
   ! Cache-Control
   Cache-Control: public, max-age=86400
+/images/blog/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
 
 /css/*
   ! Cache-Control
@@ -29,6 +32,8 @@
   Cache-Control: public, max-age=86400
 
 /labs/sentinels/v0.1.0/*
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate, no-transform
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'none'
 

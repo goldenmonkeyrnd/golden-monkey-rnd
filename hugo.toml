@@ -2,8 +2,11 @@ baseURL = "https://goldenmonkey.dev/"
 languageCode = "en-us"
 title = "Pauline Yeary · Golden Monkey R&D"
 enableRobotsTXT = true
+enableGitInfo = true
 disableKinds = ["taxonomy", "term"]
 timeZone = "America/New_York"
+[frontmatter]
+  lastmod = ["lastmod", ":git", "date"]
 [params]
   images = ["social/portfolio-lab.png"]
   social_image_alt = "Pauline Yeary, Data & AI Engineer. Golden-monkey scientists collaborate with holographic AI assistants. I use AI. I check its work."

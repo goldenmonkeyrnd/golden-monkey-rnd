@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun scripts/import-sentinels.ts && hugo server --buildDrafts --buildFuture --bind 127.0.0.1 --port 1313",
     "build": "bun scripts/import-sentinels.ts && hugo --gc --minify --cleanDestinationDir",
-    "check": "tsc --noEmit && bun scripts/test-sentinels-import.ts && bun scripts/test-sentinels-promotion.ts && bun scripts/check-site.ts",
+    "check": "tsc --noEmit && bun scripts/test-sentinels-import.ts && bun scripts/test-sentinels-promotion.ts && bun scripts/check-site.ts && bun scripts/check-seo.ts",
     "deploy": "bun run build && wrangler deploy",
     "check:browser": "bun scripts/check-lab-browser.ts"
   },

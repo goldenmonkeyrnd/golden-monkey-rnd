@@ -21,7 +21,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 function run(command: string, args: string[], environment: Record<string, string> = {}, input?: string): string {
   const result = spawnSync(command, args, { cwd: temporary, encoding: "utf8", env: { ...process.env, ...environment }, input, maxBuffer: 4 * 1024 * 1024 });
-  if (result.error || result.status !== 0) throw new Error(`${command} failed: ${result.error?.message ?? result.stderr ?? result.stdout}`);
+  if (result.error || result.status !== 0) throw new Error(`${command} failed: ${result.error?.message ?? (result.stderr.trim() || result.stdout.trim() || `exit ${result.status}`)}`);
   return result.stdout;
 }
 
@@ -239,7 +239,7 @@ try {
   const feeds = JSON.parse(run("python3", ["-c", String.raw`
 import json, sys, xml.etree.ElementTree as E
 sitemap, rss = [E.parse(p).getroot() for p in sys.argv[1:]]
-print(json.dumps(dict(sitemap={item.findtext('{*}loc'): item.findtext('{*}lastmod') for item in sitemap.findall('{*}url')}, rss=[item.findtext('link') for item in rss.findall('channel/item')]))
+print(json.dumps(dict(sitemap={item.findtext('{*}loc'): item.findtext('{*}lastmod') for item in sitemap.findall('{*}url')}, rss=[item.findtext('link') for item in rss.findall('channel/item')])))
 `, join(output, "sitemap.xml"), join(output, "blog/index.xml")])) as { sitemap: Record<string, string | null>; rss: string[] };
   for (let number = 1; number <= 12; number++) {
     const url = `${origin}/blog/post-${number}/`;

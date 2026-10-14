@@ -57,6 +57,26 @@ The existing GitHub Actions workflow validates and deploys the site. After it su
 
 **Draft status controls website publication, not repository privacy.** This website's GitHub repository is public. Keep unfinished or private writing uncommitted; pushing a draft makes its source public even though the website hides it. Avoid broad `git add .` commands while drafts are present. A post that is missing after deployment is usually still marked as a draft, dated in the future, or part of a failed deployment; check those before changing the URL.
 
+### Automatic SEO and images
+
+Hugo generates search/social metadata and structured data from the post. You can write only a title, date, and body; a plain-text summary supplies the description automatically. These optional front matter fields give you control:
+
+```toml
+description = "A short description for search results and shared links."
+summary = "An optional summary instead of Hugo's automatic excerpt."
+lastmod = "2026-10-14T09:00:00-04:00"
+images = ["cover.jpg"]
+social_image_alt = "A description of the cover image."
+```
+
+An explicit `description` takes precedence over the summary. Without `lastmod`, the post's last Git commit supplies its revision date; an uncommitted new post falls back to its publication date. Builds do not refresh dates merely because the site was rebuilt. Both publishing workflows fetch the history Hugo needs. A fresh manual clone must also contain history (`git fetch --unshallow` if you cloned with limited depth).
+
+Keep `cover.jpg` beside the post's `index.md`; `images` selects a social preview, with the site artwork as the default when omitted. Add `social_image_alt` to describe your own cover. A missing named image stops the build with its path so that a broken image cannot be published silently.
+
+Ordinary Markdown images in the bundle receive responsive WebP versions up to 1,200 pixels wide, without enlarging small originals. Hugo includes their dimensions, loads the first body image eagerly, and defers later images. SVG files and animated GIFs retain their original bytes. Generated WebP URLs contain a content hash and cache immutably; replacing an image produces a new URL automatically.
+
+`mise run check` also builds a temporary blog fixture to verify canonical URLs, dates, metadata, structured data, image output, and draft exclusion. The fixture is never part of the published site. Development previews and the error page tell crawlers not to index them; the public robots file advertises the generated sitemap.
+
 ## Sentinels lab
 
 The analyzer, browser code, examples and runtime bundle belong to [goldenmonkeyrnd/sentinels](https://github.com/goldenmonkeyrnd/sentinels), licensed AGPL-3.0-only. The stable public address is [goldenmonkey.dev/labs/sentinels/](https://goldenmonkey.dev/labs/sentinels/), with shared Hugo navigation, breadcrumbs and footer. It embeds the exact released workspace named by the committed pin; its source link uses the qualified commit. The original v0.1.0 release is explicitly grandfathered by its previously verified archive and wheel digests. Do not edit imported files or silently replace retained identities.
@@ -70,6 +90,12 @@ bun run deploy
 ```
 
 Wrangler requires a current login or a scoped `CLOUDFLARE_API_TOKEN`. The main-branch workflow qualifies a build, uploads its file-hash proof and deploys that exact artifact without rebuilding. It refuses a stale deployment when main has advanced. Configure the production environment secret `CLOUDFLARE_API_TOKEN` with Workers Scripts Edit, Workers Routes Edit, Account Settings Read, Account Analytics Read and Zone Read, scoped to the configured account and goldenmonkey.dev zone. `CLOUDFLARE_ACCOUNT_ID` may be set as a repository variable; account and custom domain are already declared in wrangler.jsonc. No paid upgrade is required.
+
+The Cloudflare zone has a redirect-only, proxied `www` CNAME pointing to `goldenmonkey.dev` (record `9e300353c4a0ecb6fac6997583c9f215`). Single Redirect ruleset `4aef335201ef42a1aeb3e8060898a4c8`, rule `b4ca572aa8ad48a798fee44bf653c899` (`portfolio_https_apex`), sends HTTP or `www` requests for these two hosts to `https://goldenmonkey.dev`, preserving path and query string with a 301 response. Other subdomains are outside its expression. These are zone resources, separate from Wrangler's Worker deployment.
+
+Before this change, the `www` record and dynamic-redirect entrypoint were absent. To undo this redirect, remove that exact rule and DNS record; remove the ruleset only if it still contains solely this rule. Preserve any later additions. Worker deployment rollback alone does not undo zone configuration. The zone ID is `99b95e7cc36d67d7cce96fdae2a4c23b`; the recorded IDs allow an exact rollback through Cloudflare's dashboard or API.
+
+Workers preview URLs and the `workers.dev` subdomain stay explicitly disabled in `wrangler.jsonc`. HTML, RSS, and sitemap responses revalidate with ETags; fingerprinted CSS, JavaScript, and generated blog images cache immutably. Ordinary pages permit compression. Released Sentinels bundles and their legacy routes retain `no-transform` and their scoped security policies. Existing Web Analytics remains preference-aware; inspect aggregate traffic and Core Web Vitals in Cloudflare without adding another tracker.
 
 Stable releases trigger `promote-sentinels.yml` through a GitHub App installed only on this website repository, with Actions write and Metadata read. The App ID/private key belong to the source publisher; this repository needs no additional secret. Dispatch inputs name the stable tag, release ID, source commit and qualification-record digest. The verifier requires a public immutable release and checks exact tag/workflow/job evidence, Python 3.12–3.14 and real browser records, every qualified asset, archive inventory and native/browser wheel identity. Mutable releases, prereleases, blocked releases and delayed older events fail before changing a pin. The candidate is committed locally, built and browser-qualified, then fast-forwarded only while main still equals its original base. The same checked public files deploy in that run. Existing production Cloudflare credentials are reused; main must permit the authorized workflow's contents write.
 
