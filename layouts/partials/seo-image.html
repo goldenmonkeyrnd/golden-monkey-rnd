@@ -1,0 +1,31 @@
+{{- /* Resolve cover images without fetching remote resources. Page bundles take precedence. */ -}}
+{{- $page := .page -}}
+{{- $result := dict -}}
+{{- with .name -}}
+  {{- $name := . -}}
+  {{- $image := $page.Resources.Get $name -}}
+  {{- if not $image -}}
+    {{- $image = resources.Get (strings.TrimPrefix "/" $name) -}}
+  {{- end -}}
+  {{- with $image -}}
+    {{- if ne .ResourceType "image" -}}
+      {{- errorf "Social image %q on %s is not an image" $name $page.RelPermalink -}}
+    {{- else -}}
+      {{- $alt := $page.Params.social_image_alt | default "" -}}
+      {{- if not $alt -}}
+        {{- with $page.Site.Params.images -}}
+          {{- if eq $name (index . 0) -}}
+            {{- $alt = $page.Site.Params.social_image_alt | default "" -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $result = dict "url" .Permalink "type" .MediaType.Type "alt" $alt "resource" . -}}
+      {{- if reflect.IsImageResourceWithMeta . -}}
+        {{- $result = merge $result (dict "width" .Width "height" .Height) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- else -}}
+    {{- errorf "Social image %q on %s was not found in its page bundle or assets" $name $page.RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

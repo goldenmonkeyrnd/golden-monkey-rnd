@@ -1,0 +1,44 @@
+{{- $src := .Destination -}}
+{{- $srcset := slice -}}
+{{- $width := 0 -}}
+{{- $height := 0 -}}
+{{- $destination := urls.Parse .Destination -}}
+{{- if and (not $destination.IsAbs) (not $destination.Host) -}}
+  {{- $image := .PageInner.Resources.Get $destination.Path -}}
+  {{- with $image -}}
+    {{- if ne .ResourceType "image" -}}
+      {{- errorf "Markdown image %q at %s is not an image" $.Destination $.Position -}}
+    {{- else -}}
+      {{- if reflect.IsImageResourceWithMeta . -}}
+        {{- $width = .Width -}}
+        {{- $height = .Height -}}
+      {{- end -}}
+      {{- /* Keep GIF frames and SVG source intact. Raster derivatives are content-addressed. */ -}}
+      {{- if and (ne .MediaType.SubType "gif") (reflect.IsImageResourceProcessable .) -}}
+        {{- $widths := slice -}}
+        {{- range slice 480 800 1200 -}}
+          {{- if lt . $image.Width -}}
+            {{- $widths = $widths | append . -}}
+          {{- end -}}
+        {{- end -}}
+        {{- $widths = $widths | append (math.Min $image.Width 1200 | int) | uniq -}}
+        {{- range $widths -}}
+          {{- $resized := $image.Resize (printf "%dx webp q82" .) -}}
+          {{- $target := printf "images/blog/%s-%d.%s.webp" (path.BaseName $image.Name | urlize) $resized.Width (crypto.SHA256 $resized.Content) -}}
+          {{- $resized = $resized | resources.Copy $target -}}
+          {{- $srcset = $srcset | append (printf "%s %dw" $resized.RelPermalink $resized.Width) -}}
+          {{- $src = $resized.RelPermalink -}}
+          {{- $width = $resized.Width -}}
+          {{- $height = $resized.Height -}}
+        {{- end -}}
+      {{- else -}}
+        {{- $src = .RelPermalink -}}
+      {{- end -}}
+      {{- with $destination.RawQuery -}}{{- $src = printf "%s?%s" $src . -}}{{- end -}}
+      {{- with $destination.Fragment -}}{{- $src = printf "%s#%s" $src . -}}{{- end -}}
+    {{- end -}}
+  {{- else -}}
+    {{- errorf "Markdown image %q at %s was not found in its page bundle" .Destination .Position -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $width }} width="{{ $width }}" height="{{ $height }}"{{ end }}{{ with $srcset }} srcset="{{ delimit . ", " }}" sizes="(max-width: 780px) calc(100vw - 40px), 740px"{{ end }} loading="{{ if eq .Ordinal 0 }}eager{{ else }}lazy{{ end }}" decoding="async">
